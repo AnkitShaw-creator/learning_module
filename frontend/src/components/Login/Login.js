@@ -2,6 +2,7 @@ import Card from '../UI/Card/Card'
 import Button from '../UI/Button/Button'
 import Input from '../UI/Input/Input';
 import { useState, useReducer, useEffect, useRef } from 'react';
+import {Link} from 'react-router-dom'
 
 import classes from './Login.module.css'
 
@@ -27,11 +28,6 @@ const passwordReducer = (state, action) => {
 
 
 const Login = (props) => {
-
-    // const [enteredEmail, setEmail] = useState('')
-    // const [emailIsValid, setEmailIsValid] = useState()
-    // const [enteredPassword, setPassword] = useState('')
-    // const [passwordIsValid, setPasswordIsValid] = useState()
     const [formIsValid, setFormIsValid] = useState(false)
 
     const [emailState, dispatchEmail] = useReducer(emailReducer, { value: "", isValid: false });
@@ -50,19 +46,14 @@ const Login = (props) => {
 
 
     const emailChangeHandler = (event) => { 
-        // setEmail(event.target.value)
         dispatchEmail({ type:"USER_INPUT", val: event.target.value})
-
-        //setFormIsValid(event.target.value.includes('@') && passwordState.isValid)
     }
     
     const passwordChangeHandler = (event) => {
-        // setPassword(event.target.value)
         dispatchPassword({type:"USER_INPUT", val: event.target.value})
-        //setFormIsValid(emailState.isValid && event.target.value.trim().length > 6)
     }
 
-    useEffect(() => {
+    useEffect(() => { // this code will run in every 500 ms 
         const identifier = setTimeout(() => {
             console.log("checking form validity");
             setFormIsValid(emailState.isValid && passwordState.isValid)
@@ -76,20 +67,20 @@ const Login = (props) => {
 
 
 
-    const validateEmail = () => {
+    const validateEmail = () => { //checking for email validity
         // setEmailIsValid(enteredEmail.includes('@'))
         dispatchEmail({type:"INPUT_BLUR"})
     }
-    const validatePassword = () => {
+    const validatePassword = () => { // checking for passwordvalidity
         // setPasswordIsValid(enteredPassword.trim().length > 6)
         dispatchPassword({type:"INPUT_BLUR"})
 
     }
 
-    const SubmitHandler = (event) => {
+    const SubmitHandler = (event) => {   //sending the value to backend
         event.preventDefault();
         if(formIsValid)
-            props.onFormSumit(emailState.value, passwordState.value)
+            props.onLogin(emailState.value, passwordState.value)
         else if (!emailState.isValid)
             emailRef.current.focus()
         else
@@ -120,11 +111,12 @@ const Login = (props) => {
                     onChange={passwordChangeHandler}
                     onBlur={validatePassword}
                 />
-                <div className={classes.action}>
+                <div className={classes.actions}>
                     <Button type="submit" className={classes.btn} disabled={!formIsValid}>Login</Button>
                 </div>
                 
             </form>
+            <Link to='/changepassword' className={classes.trigger} href='/'>Forgot Password?</Link>
         </Card>
     );
 }

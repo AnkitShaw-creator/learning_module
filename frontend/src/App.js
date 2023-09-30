@@ -2,18 +2,19 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Login from './components/Login/Login';
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+import axios from 'axios'
 import Home from './components/Home/Home';
 import AuthContext from './context/auth-context';
-
+import MainHeader from './components/Header/MainHeader';
 function App() {
 
-  const [isLoggedIn, setLoginIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     const userLogInInfo = localStorage.getItem('isLoggedIn')
     if (userLogInInfo === 1) {
-      setLoginIn(true)
+      setIsLoggedIn(true)
     }
   },[])
 
@@ -26,12 +27,22 @@ function App() {
 
   const onFormSubmit = (email, password) => {
     localStorage.setItem('isLoggedIn', '1')
-    setLoginIn(true)
+    const values = {
+      username: email, // update the variable everywhere to in the to username, as per suggestion
+      password: password
+    }
+    axios.post('http://localhost:8000/login', values)
+      .then(res => {
+        console.log(res)
+        setIsLoggedIn(true)
+      })
+      .then(err => console.log(err));
+    console.log("user is logged:",isLoggedIn)
   }
 
   const logoutHandler = () => {
-    if (isLoggedIn)
-      localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('isLoggedIn')
+    setIsLoggedIn(false)
   }
 
   return (
@@ -43,14 +54,20 @@ function App() {
       <div className="App">
         <p>Welcome to frontend</p>
         
-        <Routes>
+        {/* <Routes>
             <Route path="/login" element={<Login onFormSubmit={onFormSubmit} />} />
         </Routes>
   
         <Routes>
             <Route path='/' element={<Home></Home>} />
-        </Routes>
-      </div>
+        </Routes> */}
+        
+        <MainHeader/>
+        <main>
+          {!isLoggedIn && <Login onLogin={onFormSubmit} />}
+          {isLoggedIn && <Home onLogout={logoutHandler} />}
+        </main>
+        </div>
     </AuthContext.Provider>
   );
 }
