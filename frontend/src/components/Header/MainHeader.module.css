@@ -7,16 +7,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #741188;
+    background: #FCA311;
     padding: 0 2rem;
 }
 
 .main-header h1 {
-    color: white;
+    color: #14213d;
+    text-align: left;
 }
 
 .main-header img {
-    width: 15rem;
+    width: 10rem;
     height: 10rem;
     object-fit: contain;
     background-color: transparent;

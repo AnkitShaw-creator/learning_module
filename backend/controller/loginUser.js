@@ -1,6 +1,6 @@
 require('dotenv').config()
 const mysql = require('mysql')
-
+const jwt = require('jsonwebtoken')
 exports.login = async (req, res) => {
     try {
         
@@ -32,6 +32,9 @@ exports.login = async (req, res) => {
             }console.log(data);
             if (data.length > 0){
                 console.log("Login successful");
+                const token = jwt.sign({ data: data }, process.env.JWT_SIGN_IN_TOKEN, { expiresIn: '10' })
+                console.log(token);
+                res.cookie('token', token)
                 return res.status(200).json({"message": "Logged in"})
             }else {
                 console.log("Login failed");

@@ -1,4 +1,4 @@
-import { useState, useRef, useReducer } from "react";
+import { useState, useRef, useReducer, useEffect } from "react";
 import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
 import Input from "../UI/Input/Input";
@@ -26,30 +26,50 @@ const newPasswordReducer = (state, action) => {
 
 
 
-const ChnagePassword = (props) => {
+const ChangePassword = (props) => {
 
-    const [oldPasswordState, setOldPasswordState] = useReducer(oldPasswordReducer, { value: "", isValid: false })
-    const [newPasswordState, setNewPasswordState] = useReducer(newPasswordReducer, { value: "", isValid: false })
+    const [oldPasswordState, dispatchOldPassword] = useReducer(oldPasswordReducer, { value: "", isValid: false })
+    const [newPasswordState, dispatchNewPassword] = useReducer(newPasswordReducer, { value: "", isValid: false })
     const [formIsValid, setFormIsValid] = useState(false)
 
     const oldPasswordRef = useRef()
     const newPasswordRef = useRef()
 
-    const oldPasswordChangeHandler = () => { 
+    const oldPasswordChangeHandler = (event) => { 
+        dispatchOldPassword({type:"USER_INPUT", val: event.target.value })
 
     }
     
-    const newPasswordChangeHandler = () => {
-        
+    const newPasswordChangeHandler = (event) => {
+        dispatchNewPassword({type:"USER_INPUT", val: event.target.value })
     }
+
+    useEffect(() => { // this code will run in every 500 ms 
+        const identifier = setTimeout(() => {
+            console.log("checking form validity");
+            setFormIsValid(oldPasswordState.isValid && newPasswordState.isValid)
+        }, 500);
+
+        return () => {
+            console.log("cleaning up states...");
+            clearTimeout(identifier);
+        }
+    }, [oldPasswordState, newPasswordState]);
 
     const formSubmitHandler = () => {
         
     }
+    const validateOldPassword = () => {
+        dispatchOldPassword({type: "INPUT_BLUR"})
+     }
+    const validateNewPassword = () => {
+        dispatchNewPassword({type: "INPUT_BLUR"})
+     }
+    
 
     return (
         <>
-            <Card className={classes.chnagePassword}>
+            <Card className={classes.change}>
                 <form onSubmit={formSubmitHandler}>
                     <Input
                         ref={oldPasswordRef}
@@ -80,3 +100,5 @@ const ChnagePassword = (props) => {
         
     );
 }
+
+export default ChangePassword;

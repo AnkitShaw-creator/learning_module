@@ -53,7 +53,7 @@ const Login = (props) => {
         dispatchPassword({type:"USER_INPUT", val: event.target.value})
     }
 
-    useEffect(() => { // this code will run in every 500 ms 
+    useEffect(() => { // this code will run 500 ms after everytime the mentiond variable will change 
         const identifier = setTimeout(() => {
             console.log("checking form validity");
             setFormIsValid(emailState.isValid && passwordState.isValid)

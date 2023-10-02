@@ -4,21 +4,23 @@ require('dotenv').config({
 const cors = require('cors')
 const express = require('express')
 const { readdirSync } = require('fs')
-const mysql = require('mysql')
-const useHomeRoute = require('./routes/home')
 
+const options = {
+    origin: ['http://localhost:3000'], // add the url which should have access to the server , "*" means everyone can access the server
+    useSuccessStatus: 200,
+    methods: ['POST', 'GET'],
+    credentials: true
+};
 
 const server = express()
 
 server.use(express.json())
-const options = {
-    origin: "*", // add the url which should have access to the server , "*" means everyone can access the server
-    useSuccessStatus: 200
-};
-server.use(cors(options))
-server.get('/', (req, res) => {
-    res.end("HI there")
-//routes
+server.use('*',cors(options))
+// server.get('/', (req, res) => {
+//     res.end("HI there")    /* for testign purposes only can be deleted if not requried */
+// })
+
+
 /*this will create the routes for all the files in route folder*/
 try {
     readdirSync('./routes').map((r) => { server.use('/', require('./routes/' + r)) }); 
@@ -27,10 +29,6 @@ try {
 } catch (error) {
     console.log(error);
 }
-
-
-})
-
 
 try {
     server.listen(process.env.PORT, () => {
