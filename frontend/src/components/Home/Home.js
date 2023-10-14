@@ -10,18 +10,20 @@ import MainHeader from '../Header/MainHeader';
 
 const Home = () => { 
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+    const [IsLoggedIn, setIsLoggedIn ] = useState(false) // state variable to check the login state
+    var userData = null   // will hold user info that is retrieved from backend
+    console.log("initial login state: ", IsLoggedIn);
     useEffect(() => {
         const userLogInInfo = localStorage.getItem('isLoggedIn')
         if (userLogInInfo === 1) {
         setIsLoggedIn(true)
         }
-    }, [])
+        console.log("Login state in useEffect:", IsLoggedIn);
+    }, [IsLoggedIn])
     
-    const onFormSubmit = (email, password) => {
+    const onFormSubmit = (empcode, password) => {
         const values = {
-            username: email, // update the variable everywhere to in the to username, as per suggestion
+            EmpCode: empcode, // update the variable everywhere to in the to username, as per suggestion
             password: password
         }
         axios.defaults.withCredentials = true;
@@ -30,10 +32,11 @@ const Home = () => {
             console.log(res)
             localStorage.setItem('isLoggedIn', '1')
             setIsLoggedIn(true)
-            //props.loginState(isLoggedIn)
+            userData = res['data']['userinfo']  // extracting thr data specific to current user
+            console.log(userData);
         })
         .then(err => console.log(err));
-        console.log("user is logged:",isLoggedIn)
+        console.log("user is logged:",IsLoggedIn)
     }
 
     const logoutHandler = () => {
@@ -41,23 +44,21 @@ const Home = () => {
         setIsLoggedIn(false)
     }
 
-
     return (
         <AuthContext.Provider value={{
-            isLoggedIn: isLoggedIn,
+            isLoggedIn: IsLoggedIn,
             onLogOut: logoutHandler
         }}>
-            <MainHeader />
+            <MainHeader userInfo={userData} />
             <div className={classes.home}>
                 {/* <h1>Welcome back!</h1> */}
-                {!isLoggedIn && <Login onLogin ={onFormSubmit} />}
-                {isLoggedIn && <Dashboard/>}
+                {!IsLoggedIn && <Login onLogin ={onFormSubmit} />}
+                {IsLoggedIn && <Dashboard/>}
             </div>
         </AuthContext.Provider>
         
     );
     
 }
-
 
 export default Home

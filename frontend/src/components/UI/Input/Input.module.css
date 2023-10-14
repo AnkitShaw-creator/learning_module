@@ -31,7 +31,7 @@
     background: #e5e5e5;
 }
 
-.control.invalid input {
+.control .invalid {
     border-color: red;
     background: #fbdada;
 }

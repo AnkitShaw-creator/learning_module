@@ -1,0 +1,48 @@
+.container{
+    position: relative;
+    left: 0px;
+    width: 300px;
+    height: 100vh;
+    background: #14213d;
+    color: antiquewhite;
+    padding: 10px;
+}
+
+.topics{
+    text-align: left;
+
+}
+.courseName{
+    font-size: 16px;
+    display: flex;
+    border: 2px solid black;
+    justify-content: end;
+}
+
+.courseName h4{
+    background-color: rgb(21, 12, 32);
+}
+
+.courseName p{
+    height: 50px;
+    background-color: rgb(21, 12, 32);
+}
+
+.topics ul{
+    text-align: left;
+    list-style-type: none;
+}
+.topic li:hover{
+    cursor:crosshair;
+    padding-left: 20px;
+}
+
+@media (max-width: 700px){
+    .container{
+        width: 150px;
+        font-size: 8px;
+    }
+    .courseName{
+        font-size: 10px;
+    }
+}

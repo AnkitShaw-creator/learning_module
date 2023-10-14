@@ -5,9 +5,9 @@ exports.login = async (req, res) => {
     try {
         
         console.log(req.body);
-        const { username, password } = req.body // retrieveing the user credentials
-        console.log(username, password);
-        const query = "SELECT * FROM login WHERE username =  ?  AND password =  ? ;"; // query for the authenticating the user
+        const { EmpCode, password } = req.body // retrieveing the user credentials
+        console.log(EmpCode, password);
+        const query = "SELECT * FROM users WHERE EmpCode =  ?  AND password =  ? ;"; // query for the authenticating the user
 
         
         Database  = mysql.createConnection({   // to be move to another file, for accessing from differnt module
@@ -21,21 +21,21 @@ exports.login = async (req, res) => {
             if (err)
                 console.log(err);
             else
-                console.log("Connection successful");
+                console.log("Connection successful: loginUser");
         });
         
         // quering the database to check if the combination of username and password exists or not
-        Database.query(query, [username, password], (err, data) => { 
+        Database.query(query, [EmpCode, password], (err, data) => { 
             if (err) {
-                console.log("query ran successfully");
+                console.log("query ran successfully:loginUser");
                 throw err
-            }console.log(data);
+            } //console.log(data);
             if (data.length > 0){
                 console.log("Login successful");
                 const token = jwt.sign({ data: data }, process.env.JWT_SIGN_IN_TOKEN, { expiresIn: '10' })
                 console.log(token);
-                res.cookie('token', token)
-                return res.status(200).json({"message": "Logged in"})
+                res.cookie('user', token)
+                return res.status(200).json({"message": "Logged in", "userinfo": data})
             }else {
                 console.log("Login failed");
                 return res.status(404).json({"message":"Login failed"})

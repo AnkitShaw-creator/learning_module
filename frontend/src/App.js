@@ -1,13 +1,30 @@
 
 import './App.css';
-import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Routes, Route } from 'react-router-dom'
 import Home from './components/Home/Home';
 import AuthContext from './context/auth-context';
-
+import Login from './components/Login/Login';
+import CourseContent from './components/CourseContent/CourseContent'
 /**
  * The main file for project. The Root file for all the logical branching of the project
  */
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root/>,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/login', element:<Login/>},
+      { path: '/profile', element: '' },
+      { path: '/course-content', element: <CourseContent/>}
+    ],
+  }
+])
+
+
+
 function App() {
 
   /** only declare routes over here, program logic should be covered in thier respective files/folders */
@@ -22,10 +39,7 @@ function App() {
   return (
     <div className="App">
       <main>
-        <Routes>
-          {/* going to the landing page/ home page */}
-          <Route path='/' element={<Home/>} />  
-        </Routes>
+        <RouterProvider router={router}/>
       </main>
     </div>
   );
