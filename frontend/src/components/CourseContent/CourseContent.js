@@ -13,9 +13,9 @@ const CourseContent = (props) => {
         
         <div className={classes.container}>
             <SideNavBar navContent={state.data} />
-            <div className={classes.player}>
-               <ReactPlayer url='https://www.youtube.com/watch?v=LXb3EKWsInQ' controls={true}   width='100%' height='100%' />
-            </div>
+            {/* <div className={classes.player}>
+               <ReactPlayer url='https://www.youtube.com/watch?v=LXb3EKWsInQ' controls={true} />
+            </div> */}
             
         </div>
         

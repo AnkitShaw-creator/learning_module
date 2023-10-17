@@ -12,14 +12,16 @@
     align-self: right;
 }
 
+
+
+.trigger {
+    align-self: flex-start;
+}
+
 @media (min-width: 768px) {
     .control {
         align-items: center;
         flex-direction: row;
     }
 
-}
-
-.trigger {
-    align-self: flex-start;
 }

@@ -1,8 +1,43 @@
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+
 
 const AuthContext = createContext({
     isLoggedIn: false,
-    onLogOut: ()=>{}
+    onLogOut: () => {},
+    onLogIn: () => {}
 })
 
-export default AuthContext
+export const AuthContextProvider = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [cookie, setCookie, removeCookie] = useCookies(['user'])
+    
+    useEffect(() => {
+        const userLogInInfo = cookie.user
+        if (userLogInInfo) {
+            setIsLoggedIn(true)
+        }
+        
+    }, [isLoggedIn, cookie.user])
+
+
+    const logoutHandler = () => {
+        removeCookie('user', { path: '/', domain: 'localhost' })
+        setIsLoggedIn(false)
+    }
+    const logInHandler = () => {
+        if (cookie.user)
+            setIsLoggedIn(true)
+    }
+    return (
+        <AuthContext.Provider
+            value={{
+                isLoggedIn: isLoggedIn,
+                onLogOut: logoutHandler,
+                onLogIn:logInHandler
+            }}>
+            {props.children}
+        </AuthContext.Provider>);
+}
+
+export default AuthContext;

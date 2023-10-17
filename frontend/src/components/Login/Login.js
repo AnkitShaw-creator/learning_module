@@ -1,10 +1,11 @@
 import Card from '../UI/Card/Card'
 import Button from '../UI/Button/Button'
 import Input from '../UI/Input/Input';
-import { useState, useReducer, useEffect, useRef } from 'react';
-import {Link} from 'react-router-dom'
-
+import { useState, useReducer, useEffect, useRef, useContext } from 'react';
+import {Link, useNavigate} from 'react-router-dom'
+import axios from 'axios';
 import classes from './Login.module.css'
+import AuthContext from '../../context/auth-context';
 
 const empcodeReducer = (state, action) => { 
 
@@ -28,6 +29,8 @@ const passwordReducer = (state, action) => {
 
 
 const Login = (props) => {
+    const ctx = useContext(AuthContext)
+    const navigate = useNavigate()
     const [formIsValid, setFormIsValid] = useState(false)
 
     const [empcodeState, dispatchEmpCode] = useReducer(empcodeReducer, { value: "", isValid: false });
@@ -44,14 +47,12 @@ const Login = (props) => {
         dispatchPassword({type:"USER_INPUT", val: event.target.value})
     }
 
-    useEffect(() => { // this code will run 500 ms after everytime the mentiond variable will change 
+    useEffect(() => { // this code will run 200 ms after everytime the mentiond variable will change 
         const identifier = setTimeout(() => {
-            //console.log("checking form validity");
             setFormIsValid(empcodeState.isValid && passwordState.isValid)
         }, 200);
 
         return () => {
-            //console.log("cleaning up states...");
             clearTimeout(identifier);
         }
     }, [empcodeState, passwordState]);
@@ -59,23 +60,33 @@ const Login = (props) => {
 
 
     const validateEmpCode = () => { //checking for email validity
-        // setEmailIsValid(enteredEmail.includes('@'))
         dispatchEmpCode({type:"INPUT_BLUR"})
     }
     const validatePassword = () => { // checking for passwordvalidity
-        // setPasswordIsValid(enteredPassword.trim().length > 6)
         dispatchPassword({type:"INPUT_BLUR"})
 
     }
 
     const SubmitHandler = (event) => {   //sending the value to backend
-        event.preventDefault();
-        if(formIsValid)
-            props.onLogin(empcodeState.value, passwordState.value)
-        else if (!empcodeState.isValid)
-            empCodeRef.current.focus()
-        else
-            passwordRef.current.focus()
+        if(formIsValid){
+            const values = {
+                EmpCode: empcodeState.value, // update the variable everywhere to in the to username, as per suggestion
+                password: passwordState.value
+            }
+            axios.defaults.withCredentials = true;
+            axios.post('http://localhost:8000/login', values)
+                .then(res => {
+                    console.log(res)
+                    ctx.onLogIn()
+                    navigate('/dashboard' ,{state: {userdata: res['data']['userinfo'] }})
+                    //console.log(res['data']['userinfo'] );
+            }).then(err => console.log(err));
+            
+        }
+        // else if (!empcodeState.isValid)
+        //     empCodeRef.current.focus()
+        // else
+        //     passwordRef.current.focus()
 
     }
 
@@ -103,7 +114,7 @@ const Login = (props) => {
                     onBlur={validatePassword}
                 />
                 <div className={classes.actions}>
-                    <Button type="submit" className={classes.btn} disabled={!formIsValid}>Login</Button>
+                    <Button type="submit" disabled={!formIsValid}>Login</Button>
                 </div>
                 
             </form>

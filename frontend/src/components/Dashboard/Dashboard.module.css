@@ -1,7 +1,56 @@
 .dashboard {
-    width: 90%;
-    max-width: 40rem;
-    padding: 3rem;
+    margin-top: 5px;
+    padding: 0.4rem;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    background-color: #f1c47b;
+    justify-content: space-evenly;
+}
+
+.header {
+    margin: 10px;
+    padding: 2rem;
+    width: 80%;
     margin: 2rem auto;
     text-align: center;
+    border-radius: 5px;
+    color: #14213d;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.contents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background-color: #bfbdbd;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
+}
+
+.contents p {
+    width: 100%;
+    text-align: center;
+}
+
+.module {
+    width: fit-content;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    justify-content: center;
+}
+
+@media (max-width: 700px) {
+    .module {
+        width: 40rem;
+    }
+
+    .header {
+        margin-top: 10rem;
+        padding: auto;
+        width: 60%;
+        font-size: 12px;
+        align-items: center;
+    }
 }

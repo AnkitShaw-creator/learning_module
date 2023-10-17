@@ -1,40 +1,71 @@
 .container{
-    position: relative;
-    left: 0px;
-    width: 300px;
-    height: 100vh;
-    background: #14213d;
-    color: antiquewhite;
+    width: 80%;
+    height: 100%;
+    background: rgb(235, 230, 230);
+    color: black;
+    margin-top: 1rem;
+}
+
+.course{
+    position: sticky;
+    max-height: 100vh;
+    text-align: left;
+    overflow-y: auto;
+}
+.courseName{
+    display: flex;
+    flex-flow: row;
+    height: 60px;
+    align-content: center;
+    font-size: large;
+}
+
+.course_id{
     padding: 10px;
+    width: fit-content;
+    align-self: center;
+    height: 60px;
+    background-color: wheat;
+    border-right: 2px solid black;
+}
+
+.course_name{
+    padding: 10px;
+    height: 60px;
+    text-wrap: wrap;
+    text-align: left;
+    align-self: center;
+    background-color: aqua;
 }
 
 .topics{
-    text-align: left;
-
+    margin-top: 5px;
+    align-items: left;
 }
-.courseName{
-    font-size: 16px;
+
+.topic_header{
     display: flex;
-    border: 2px solid black;
-    justify-content: end;
+    flex-flow: row;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+    align-content: baseline;
+    justify-content: space-between;
+    font-size: 24px;
 }
 
-.courseName h4{
-    background-color: rgb(21, 12, 32);
+.icon{
+    align-self: center;
 }
-
-.courseName p{
-    height: 50px;
-    background-color: rgb(21, 12, 32);
+.icon:hover{
+    cursor: pointer;
 }
 
 .topics ul{
     text-align: left;
     list-style-type: none;
 }
-.topic li:hover{
-    cursor:crosshair;
-    padding-left: 20px;
+.topics li:hover{
+    cursor:pointer;
 }
 
 @media (max-width: 700px){
