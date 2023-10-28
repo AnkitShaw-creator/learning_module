@@ -25,6 +25,7 @@ const Input = React.forwardRef((props, ref) => {
                 value={props.value}
                 onChange={props.onChange}
                 onBlur={props.onBlur}
+                disabled={props.disabled}
             />
         </div >
     );

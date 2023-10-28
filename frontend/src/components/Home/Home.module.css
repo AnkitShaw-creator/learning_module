@@ -1,30 +1,13 @@
 .home {
     width: 100%;
-    max-width: 80rem;
-    padding: 3rem;
-    margin: 2rem auto;
+    height: fit-content;
+    display: flex;
+    flex-flow: column;
     text-align: center;
     align-content: center;
     align-items: center;
+    justify-content: space-evenly;
 }
-.footer{
-    position: sticky;
+.outlet{
     width: 100%;
-    padding: 2rem;
-    text-align: center;
-    align-content: center;
-}
-
-
-
-@media (max-width:700px) {
-    .home {
-        width: auto;
-        padding: 1.5rem;
-        height: fit-content;
-    }
-
-    .footer {
-        position: fixed;
-    }
 }

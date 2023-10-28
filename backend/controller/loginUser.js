@@ -1,23 +1,23 @@
 require('dotenv').config()
 const mysql = require('mysql')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
 exports.login = async (req, res) => {
     try {
-        
         console.log(req.body);
-        const { EmpCode, password } = req.body // retrieveing the user credentials
-        console.log(EmpCode, password);
-        const query = "SELECT * FROM users WHERE EmpCode =  ?  AND password =  ? ;"; // query for the authenticating the user
+        const { EmpCode, password } = req.body // retrieveing the user empcode and password
+        
+        //console.log(EmpCode, password);
+        const query = "SELECT * FROM users WHERE EmpCode = ?"; // query for the authenticating the user
 
         
-        Database  = mysql.createConnection({   // to be move to another file, for accessing from differnt module
+        Database  = mysql.createConnection({  //creating the connection to db
             host: process.env.SQL_HOST,
-            port: process.env.SQL_PORT,
-            user: process.env.SQL_USER,
-            password: process.env.SQL_PASSWORD,
+            port: process.env.SQL_PORT, 
+            user: process.env.SQL_USER,    // in prod, include password
             database: process.env.SQL_DATABASE
         });
-        Database.connect((err) => { // setting up the connection with the database
+        Database.connect((err) => { // connecting with the database
             if (err)
                 console.log(err);
             else
@@ -25,20 +25,26 @@ exports.login = async (req, res) => {
         });
         
         // quering the database to check if the combination of username and password exists or not
-        Database.query(query, [EmpCode, password], (err, data) => { 
+        Database.query(query, [EmpCode], (err, data) => { 
             if (err) {
-                console.log("query ran successfully:loginUser");
-                throw err
-            } //console.log(data);
-            if (data.length > 0){
-                console.log("Login successful");
-                const token = jwt.sign({ data: data }, process.env.JWT_SIGN_IN_TOKEN, { expiresIn: '10' })
-                console.log(token);
-                res.cookie('user', token)
-                return res.status(200).json({"message": "Logged in", "userinfo": data})
-            }else {
-                console.log("Login failed");
-                return res.status(404).json({"message":"Login failed"})
+                console.error(err); // to display the errors that have occured during retrieving the data
+            }
+            if (data.length > 0) {
+                bcrypt.compare(password, data[0].password).then((res) => {
+                    // checking where the password hash in db is matching with the enter password
+                    if (res) {
+                        console.log("Login successful");
+                        const token = jwt.sign({ data: data }, process.env.JWT_SIGN_IN_TOKEN, { expiresIn: '10' })
+                        //res.cookie('uid', data[0])
+                        //console.log(token);
+                        res.cookie('user', token)
+                        return res.status(200).json({"message": "Logged in", "userinfo": data})
+                    }
+                    else {
+                        console.log("Login failed");
+                        return res.status(404).json({"message": "Login failed, password incorrect"})
+                    }
+                })
             }
         })
     } catch (error) {

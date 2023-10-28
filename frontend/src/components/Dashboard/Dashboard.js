@@ -3,18 +3,20 @@ import Card from '../UI/Card/Card'
 import Button from '../UI/Button/Button';
 import Content from './Content';
 import axios from 'axios';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const Dashboard = (props) => {
-    const [data , dispatchData] = useState([])
+    const navigate = useNavigate()
+    const [data, dispatchData] = useState([])
     const values = {   
         department: "IT",
         role: "dev"
     }   
     useEffect(() => {
         try {
-            axios.get('http://localhost:8000/courses')
+            axios.post('http://localhost:8000/courses', values)
                 .then((res) => {
                     if(res.data.message !== "data not retrieved")
                         dispatchData(res.data);
@@ -28,22 +30,25 @@ const Dashboard = (props) => {
             console.log(err);
         }
     },[])
-    console.log(data.data);
+    //console.log(data.data);
     const courses = data.data
+
     return (
         <Card className={classes.dashboard}>
-            <div className={classes.header}>
+            <div className={classes.welcome_box}>
                 <h1> Welcome back! Ankit</h1>
-                <Button>My Profile </Button>
+                <Link to='/profile'>
+                    <Button>View Profile</Button>
+                </Link>
             </div>
             
             <div className={classes.contents}>
-                <p>
+                <h5>
                     All the courses you are enrolled in will be displayed here.
-                </p>
+                </h5>
                 <div className={classes.module}>
                     {courses?.map(course => {
-                        return (<Content data={course} />);
+                        return (<Content data={course} key={course.id} />);
                     })}
                 </div>
             </div>

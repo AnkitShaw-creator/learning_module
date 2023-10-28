@@ -6,6 +6,8 @@ import ErrorPage from './components/Error/ErrorPage';
 import CourseContent from './components/CourseContent/CourseContent';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
+import ChangePassword from './components/Login/ChangePassword';
+import Profile from './components/Profle/Profile';
 
 
 /**
@@ -18,11 +20,12 @@ const router = createBrowserRouter([
     element: <Home/>,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <Home /> },
+      { path: '', element: <Home /> },
       { path: '/dashboard', element:<Dashboard/> },
-      { path: '/login', element:<Login/>},
-      { path: '/profile', element: '' },
-      { path: '/course-content', element: <CourseContent/>}
+      { path: '/login', element:<Login/> },
+      { path: '/profile', element: <Profile/> },
+      { path: '/course-content/:courseName', element: <CourseContent /> },
+      { path:'/changePassword', element: <ChangePassword/> }
     ],
   }
 ])

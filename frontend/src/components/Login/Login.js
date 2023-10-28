@@ -79,7 +79,7 @@ const Login = (props) => {
                     console.log(res)
                     ctx.onLogIn()
                     navigate('/dashboard' ,{state: {userdata: res['data']['userinfo'] }})
-                    //console.log(res['data']['userinfo'] );
+                    console.log(res['data']['userinfo'] );
             }).then(err => console.log(err));
             
         }
@@ -102,6 +102,7 @@ const Login = (props) => {
                     isValid={empcodeState.isValid} 
                     onChange={empCodeChangeHandler} 
                     onBlur={validateEmpCode}
+                    disabled={false}
                 />
                 <Input
                     ref={passwordRef}
@@ -112,6 +113,7 @@ const Login = (props) => {
                     isValid={passwordState.isValid} 
                     onChange={passwordChangeHandler}
                     onBlur={validatePassword}
+                    disabled={false}
                 />
                 <div className={classes.actions}>
                     <Button type="submit" disabled={!formIsValid}>Login</Button>

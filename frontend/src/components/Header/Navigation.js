@@ -28,7 +28,7 @@ const Navigation = () => {
         {context.isLoggedIn && (
           <li>
               {/**  to move to profile page*/}
-              <NavLink href="/">My Profile</NavLink>  
+              <NavLink to="/profile">My Profile</NavLink>  
           </li>
           
         )}

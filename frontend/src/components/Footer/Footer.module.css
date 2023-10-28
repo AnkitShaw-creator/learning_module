@@ -1,0 +1,15 @@
+footer{
+    display: block;
+    position: fixed;
+    width: 100%;
+    bottom: 0rem;
+
+}
+
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;    
+    background-color: #FCA311;
+}

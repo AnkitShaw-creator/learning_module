@@ -5,7 +5,7 @@ import MainHeader from '../Header/MainHeader';
 import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 import classes from './Home.module.css'
-
+import Footer from '../Footer/Footer';
 const Home = () => { 
 
     const context = useContext(AuthContext)
@@ -24,16 +24,16 @@ const Home = () => {
     }, [context, userData])
     
     return (
-        <>
+        <div  className={classes.home}>
             <MainHeader userInfo={userData} />
-            <div>
+            <div className={classes.outlet}>
                 <Outlet/>
             </div>
-            <footer className={classes.footer}> For internal use only.</footer>
-        </>
+            <Footer />
+        </div>
         
     );
     
 }
 
-export default Home
+export default Home;

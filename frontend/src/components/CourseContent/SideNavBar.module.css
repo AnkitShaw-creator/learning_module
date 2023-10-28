@@ -1,9 +1,9 @@
 .container{
-    width: 80%;
+    position: relative;
+    width: 25%;
     height: 100%;
     background: rgb(235, 230, 230);
     color: black;
-    margin-top: 1rem;
 }
 
 .course{
@@ -17,7 +17,7 @@
     flex-flow: row;
     height: 60px;
     align-content: center;
-    font-size: large;
+    font-size: 18px;
 }
 
 .course_id{
@@ -41,6 +41,7 @@
 .topics{
     margin-top: 5px;
     align-items: left;
+    margin-left: 5px;
 }
 
 .topic_header{
@@ -50,11 +51,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
     align-content: baseline;
     justify-content: space-between;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .icon{
     align-self: center;
+    display: flex;
+    position: absolute;
+    right: 0px;
 }
 .icon:hover{
     cursor: pointer;
@@ -70,10 +74,9 @@
 
 @media (max-width: 700px){
     .container{
-        width: 150px;
-        font-size: 8px;
+        font-size: 6px;
     }
     .courseName{
-        font-size: 10px;
+        font-size: 8px;
     }
 }

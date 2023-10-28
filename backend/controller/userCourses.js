@@ -6,18 +6,15 @@ exports.courses = async (req, res) => {
     try {
         console.log("request body:",req.body);
     
-        // const department = "IT"
-        // const role = "dev"
-        const { department, role } = req.body
-        
-        // for developement purpose only, the value should be dynamically set
-        //console.log(department, role);
+        const department = req.body.department
+        const role = req.body.role
+
+        console.log(department, role);
         const query = "select * from courses where department = ? and role = ? ;"; //query for retrieveing the data from courses table
-        Database  = mysql.createConnection({   // to be move to another file, for accessing from differnt module
+        Database  = mysql.createConnection({  
             host: process.env.SQL_HOST,
             port: process.env.SQL_PORT,
-            user: process.env.SQL_USER,
-            password: process.env.SQL_PASSWORD,
+            user: process.env.SQL_USER,   // in prod, include password
             database: process.env.SQL_DATABASE
         });
         Database.connect((err) => {
@@ -27,7 +24,7 @@ exports.courses = async (req, res) => {
                 console.log("Connection successful:userCourse");
         })
 
-        Database.query(query, ["IT", "dev"], (err, data) => {
+        Database.query(query, [department, role], (err, data) => {
             if (err) {
                 console.log(err);
             }

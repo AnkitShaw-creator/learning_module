@@ -6,7 +6,7 @@ const Content = (props) => {
     const course = props.data
     const navigate = useNavigate()
     const navContentHandler = () => {
-        navigate('/course-content',{
+        navigate(`/course-content/${course.courseName}`,{
             state: {data: course}
         })
     }
