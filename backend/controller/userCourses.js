@@ -19,7 +19,7 @@ exports.courses = async (req, res) => {
         });
         Database.connect((err) => {
             if (err)
-                console.log(err);
+                console.error(`connection distrupted due to error: ${err}`);
             else
                 console.log("Connection successful:userCourse");
         })

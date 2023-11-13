@@ -3,9 +3,8 @@
     border: 1px solid #14213d;
     background: #14213d;
     color: white;
-    padding: 0.75rem 3.5rem;
+    padding: 0.75rem 2.5rem;
     cursor: pointer;
-    font-size: 1.15rem;
     border-radius: 15px;
 }
 
@@ -13,6 +12,7 @@
 .button:active {
     background: #14213d;
     border-color: #14213d;
+    cursor: pointer;
 }
 
 .button:focus {

@@ -5,14 +5,19 @@ import Content from './Content';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie'
+import jwt_decode from 'jwt-decode';
 
 
 const Dashboard = (props) => {
     const navigate = useNavigate()
+    const [cookies, setCookie] = useCookies('user')
+    var token = jwt_decode(cookies.user)
+    var user = token.data.at(0);
     const [data, dispatchData] = useState([])
     const values = {   
-        department: "IT",
-        role: "dev"
+        department: user.department,
+        role: user.role
     }   
     useEffect(() => {
         try {
@@ -24,19 +29,22 @@ const Dashboard = (props) => {
                         throw res.data
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                 })
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
-    },[])
-    //console.log(data.data);
+    }, [])
+    
     const courses = data.data
-
+    console.log(courses);
     return (
         <Card className={classes.dashboard}>
             <div className={classes.welcome_box}>
-                <h1> Welcome back! Ankit</h1>
+                <div>
+                    <h2 className={classes.initials}>AS</h2>
+                    <h2> Welcome back! {user.FirstName}</h2>
+                </div>
                 <Link to='/profile'>
                     <Button>View Profile</Button>
                 </Link>

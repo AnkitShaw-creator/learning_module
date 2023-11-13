@@ -1,0 +1,45 @@
+.topics {
+    margin-top: 5px;
+    margin-left: 5px;
+    text-decoration: none;
+}
+
+.topic_header {
+    display: flex;
+    flex-flow: row;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+    gap:5rem;
+    font-size: 16px;
+}
+
+.topic_header h6{
+    opacity: 0.6;
+}
+
+
+.icon {
+    align-self: center;
+    display: flex;
+    position: absolute;
+    right: 5px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.navlist{
+    margin-left: 0rem;
+    text-decoration: none;
+}
+.navlist ul{
+    text-decoration: none;
+    list-style:none;
+}
+.navlist li:hover{
+    cursor: pointer;
+}
+.navlist li:active{
+    background-color: rgb(163, 162, 161);
+}

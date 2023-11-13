@@ -13,7 +13,7 @@ const options = {
 };
 
 const server = express()
-
+server.use(express.static('static'))
 server.use(express.json())
 server.use('*',cors(options))
 // server.get('/', (req, res) => {

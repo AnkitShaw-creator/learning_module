@@ -8,7 +8,7 @@ import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import ChangePassword from './components/Login/ChangePassword';
 import Profile from './components/Profle/Profile';
-
+import MediaDisplay from './components/CourseContent/MediaDisplay';
 
 /**
  * The main file for project. The Root file for all the logical branching of the project
@@ -24,7 +24,8 @@ const router = createBrowserRouter([
       { path: '/dashboard', element:<Dashboard/> },
       { path: '/login', element:<Login/> },
       { path: '/profile', element: <Profile/> },
-      { path: '/course-content/:courseName', element: <CourseContent /> },
+      { path: '/course-content/:courseCode', element: <CourseContent /> },
+      { path: '/course-content/:courseCode/:url', element: <MediaDisplay/>},
       { path:'/changePassword', element: <ChangePassword/> }
     ],
   }

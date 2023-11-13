@@ -1,6 +1,8 @@
 require("dotenv").config();
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+
 
 exports.changePassword = async (req, res) => {
   try {
@@ -9,7 +11,10 @@ exports.changePassword = async (req, res) => {
         console.log(EmpCode, newPassword);
 
         const query = "UPDATE users SET password = ? WHERE EmpCode = ?;";
-
+        
+        var salt = bcrypt.genSaltSync(10);
+        var hashPassword = bcrypt.hashSync(newPassword, salt);
+        console.log(hashPassword);
         Database = mysql.createConnection({
         host: process.env.SQL_HOST,
         port: process.env.SQL_PORT,
@@ -18,11 +23,11 @@ exports.changePassword = async (req, res) => {
         });
         Database.connect((err) => {
             if (err)
-                console.error(err);
+                console.error(`connection distrupted due to error: ${err}`);
             else
-                console.log("Connection successful:userCourse");
+                console.log("Connection successful: changePassword");
         });
-        Database.query(query, [newPassword, EmpCode], (err, data) => {
+        Database.query(query, [hashPassword, EmpCode], (err, data) => {
             if (err){
                 console.error(err);
                 return res.status(404);

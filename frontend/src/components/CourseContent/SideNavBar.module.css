@@ -1,47 +1,60 @@
 .container{
     position: relative;
-    width: 25%;
-    height: 100%;
+    width: 90%;
     background: rgb(235, 230, 230);
     color: black;
+    margin-bottom: 2.5rem;
 }
 
 .course{
-    position: sticky;
+    position: absolute;
     max-height: 100vh;
     text-align: left;
-    overflow-y: auto;
+    width: 100%;
+    overflow-y:auto;
+    margin-bottom: 3rem;
+    scroll-behavior: smooth;
 }
 .courseName{
     display: flex;
     flex-flow: row;
-    height: 60px;
-    align-content: center;
+    height: fit-content;
+    align-content:flex-start;
     font-size: 18px;
+    border: 2px solid black;
 }
 
 .course_id{
     padding: 10px;
     width: fit-content;
+    height: 100%;
     align-self: center;
-    height: 60px;
-    background-color: wheat;
-    border-right: 2px solid black;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    
 }
 
 .course_name{
+    margin-top: 0rem;
+    margin-bottom: 0rem;
     padding: 10px;
-    height: 60px;
+    height: 100%;
     text-wrap: wrap;
     text-align: left;
     align-self: center;
+    border-left: 2px solid black;
     background-color: aqua;
+    border-radius: 8px;
+}
+.list{
+    border:2px solid black;
+    margin-bottom: 2.5rem;
 }
 
 .topics{
     margin-top: 5px;
-    align-items: left;
     margin-left: 5px;
+    text-decoration: none;
 }
 
 .topic_header{
@@ -49,7 +62,6 @@
     flex-flow: row;
     padding: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
-    align-content: baseline;
     justify-content: space-between;
     font-size: 16px;
 }
@@ -64,10 +76,7 @@
     cursor: pointer;
 }
 
-.topics ul{
-    text-align: left;
-    list-style-type: none;
-}
+
 .topics li:hover{
     cursor:pointer;
 }

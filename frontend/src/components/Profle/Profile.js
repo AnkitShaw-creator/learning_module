@@ -5,50 +5,90 @@ import jwt_decode from 'jwt-decode';
 import classes from './Profile.module.css';
 import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
+import Input from '../UI/Input/Input'
+//import logo from '../../asset/Sumpurna_logo_tagline.png'
+
 const Profile = () => {
-    const [cookies, setCookie] = useCookies('user')
-    //console.log(cookies);
-    // const { decodedToken, isExpired } = useJwt(cookies)
-    var token = jwt_decode(cookies.user)
-    //console.log(token.data.at(0));
-    var user = token.data.at(0);
-    //console.log(decodedToken(token));
+    const [cookies, setCookie] = useCookies('user') // accessing the user cookies
+    var token = jwt_decode(cookies.user) // deccoding the cookie
+    var user = token.data.at(0); // accessing the data
+
     return (
         <Card className={classes.container}>
-            <div>
-                <p  className={classes.displayContent}>
-                    <label htmlFor='empcode'>EmpID: </label>
-                    <input type='text' value={user.EmpCode} disabled={true}  id='empcode'/>
-                </p>
-                <p className={classes.displayContent}>
-                    <label htmlFor='firstName'>First Name: </label>
-                    <input type='text' value={user.FirstName} disabled={true} id='firstName'/>
-                </p>
-                <p className={classes.displayContent}>
-                    <label htmlFor='middleName'>Middle Name: </label>
-                    <input type='text' value={!user.MiddleName? "N/A": user.MiddleName} disabled={true} id='middleName'/>
-                </p>
-                <p className={classes.displayContent}>
-                    <label htmlFor='lastName'>Last Name: </label>
-                    <input type='text' value={user.LastName} disabled={true} id='lastName'/>
-                </p>
-                <p className={classes.displayContent}>
-                    <label htmlFor='role'>Role: </label>
-                    <input type='text' value={user.role} disabled={true} id='role'/>
-                </p>
-                <p className={classes.displayContent}>
-                    <label htmlFor='lastLogin'>Last Login:  </label>
-                    <input type='text' value={user.LastLogin} disabled={true} id='lastLogin'/>
-                </p>
-                <p className={classes.displayContent}>
-                    <label htmlFor='password'>Password:</label>
-                    <input type='password' value={user.password} disabled={true} id='password'/>
-                </p>
+            <div className={classes.displayContent}>
+                <div className={classes.image_form}>
+                    <img width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/>
+                    <div className={classes.details}>
+                        <span>Email: {user.email}</span> 
+                        <span>Department: {user.department}</span>  
+                    </div>
+                    
+                    
+                </div>
+                <Input
+                    id="empcode"
+                    type="text" 
+                    label="Employee Code" 
+                    value={user.EmpCode} 
+                    isValid={true}
+                    disabled={true}
+                />
+                <Input
+                    id="firstName"
+                    type="text" 
+                    label="First Name" 
+                    value={user.FirstName} 
+                    isValid={true}
+                    disabled={true}
+                />
+                <Input
+                    id="middleName"
+                    type="text" 
+                    label="Middle Name" 
+                    value={!user.MiddleName? "N/A": user.MiddleName} 
+                    isValid={true}
+                    disabled={true}
+                />
+                <Input
+                    id="lastName"
+                    type="text" 
+                    label="Last Name" 
+                    value={user.LastName} 
+                    isValid={true}
+                    disabled={true}
+                />
+                
+                
+                <Input
+                    id="role"
+                    type="text" 
+                    label="Role" 
+                    value={user.role} 
+                    isValid={true}
+                    disabled={true}
+                />
+                <Input
+                    id="lastLogin"
+                    type="text" 
+                    label="Last Login" 
+                    value={user.LastLogin} 
+                    isValid={true}
+                    disabled={true}
+                />
+                <Input
+                    id="password"
+                    type="password" 
+                    label="Password" 
+                    value={user.password} 
+                    isValid={true}
+                    disabled={true}
+                />
 
-                <Link to='/changePassword'>
-                    <Button>Change Password</Button>
-                </Link>
+                
             </div>
+            <Link to='/changePassword'>
+                <Button>Change Password</Button>
+            </Link>
             
         </Card>
         

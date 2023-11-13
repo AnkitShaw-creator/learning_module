@@ -20,21 +20,22 @@ const Navigation = () => {
       <ul>
         {context.isLoggedIn && (
           <li>
-              {/**  to move to profile page*/}
+              {/** to move to profile page */}
               <NavLink to="/">Home</NavLink>  
           </li>
           
         )}
+        
         {context.isLoggedIn && (
           <li>
-              {/**  to move to profile page*/}
+              {/** to move to profile page */}
               <NavLink to="/profile">My Profile</NavLink>  
           </li>
           
         )}
         {context.isLoggedIn && (
           <li>
-            {/**onclciking the button the user should log out */}
+            {/** onclciking the button the user should log out */}
             <button onClick={logoutHandler}>Logout</button>
           </li>
         )}
