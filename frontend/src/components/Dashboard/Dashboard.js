@@ -13,12 +13,15 @@ const Dashboard = (props) => {
     const navigate = useNavigate()
     const [cookies, setCookie] = useCookies('user')
     var token = jwt_decode(cookies.user)
-    var user = token.data.at(0);
+    console.log(token);
+    var user = token.data.at(0).at(0); // retriving the userdata
+    var departments = token.data.at(1); // retriving the departments user is part of 
     const [data, dispatchData] = useState([])
     const values = {   
-        department: user.department,
+        departments: departments.map(d =>{ return d.department}),
         role: user.role
     }   
+    console.log(values);
     useEffect(() => {
         try {
             axios.post('http://localhost:8000/courses', values)
@@ -40,19 +43,24 @@ const Dashboard = (props) => {
     console.log(courses);
     return (
         <Card className={classes.dashboard}>
-            <div className={classes.welcome_box}>
-                <div>
-                    <h2 className={classes.initials}>AS</h2>
-                    <h2> Welcome back! {user.FirstName}</h2>
-                </div>
-                <Link to='/profile'>
-                    <Button>View Profile</Button>
-                </Link>
+            <div className={classes.welcome_box}> 
+                    <div className={classes.initials}>
+                        <div className={classes.initials_circle}>
+                            <p>{user.FirstName.charAt(0)+user.LastName.charAt(0)}</p>
+                        </div> 
+                    </div>
+                    <div>
+                        <h2> Welcome back! {user.FirstName}</h2>
+                        <Link to='/profile'>
+                            <Button>View Profile</Button>
+                        </Link>
+                    </div>
             </div>
             
             <div className={classes.contents}>
                 <h5>
-                    All the courses you are enrolled in will be displayed here.
+                    {courses ? 'All the courses you are enrolled in will be displayed here.' :
+                        'No courses are assigned to you yet.'}
                 </h5>
                 <div className={classes.module}>
                     {courses?.map(course => {

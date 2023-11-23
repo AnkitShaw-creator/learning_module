@@ -80,8 +80,8 @@ const Content = (props) => {
             <div className={classes.course}>
                 <div className={classes.course_preview}>
                     <h6>Department</h6>
-                    <h2>{course.department}</h2>
-                    <h6>Duration: {course.duration} days</h6>
+                    <p>{course.department}</p>
+                    <h6>Duration: {course.duration}</h6>
                 </div>
                 <div className={classes.course_info}>
                     <div className={classes.progress_container}>
@@ -92,7 +92,7 @@ const Content = (props) => {
                         </span>
                     </div>
                     <h5>Course</h5>
-                    <h2>{course.courseName}</h2>
+                    <h3>{course.courseName}</h3>
                     <Button onClick ={navContentHandler}>View Course</Button>
                 </div>
             </div>

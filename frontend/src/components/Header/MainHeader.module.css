@@ -1,31 +1,30 @@
 .main-header {
     top: 0;
     left: 0;
+    right:0;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-flow: row;
     align-content: first baseline;
     background: #FCA311;
-    padding: 0 3rem;
     justify-content: space-between;
 }
 
-h1 {
+.module_name {
     color: #14213d;
     text-align: center;
     align-self: center;
-    justify-self: center;
-    top: 1rem;
+    top: 0.5rem;
+    height: fit-content;
     position: absolute;
-    z-index:index 1;
 }
 
-.main-header img {
-    width: 7rem;
-    height: 7rem;
+.banner_img {
+    width: 6.5rem;
+    height: 6.5rem;
     object-fit: contain;
     background-color: transparent;
+    margin-left: 3rem;
 }
 .navContainer{
     top:10%;
@@ -48,12 +47,19 @@ h1 {
         height: 4rem;
         align-self: center;
     }
-    h1{ 
-        top:3rem;
+    .module_name{ 
+        margin-top: 2.5rem;
         font-size: 18px;
     }
     .navContainer{
         font-size:8px;
         margin-left: 0%;
+    }
+}
+@media(max-width: 1000px){
+    .module_name{
+        top:1rem;
+        font-size: 24px;
+        left:30%;
     }
 }

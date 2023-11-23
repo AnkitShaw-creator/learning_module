@@ -8,12 +8,11 @@ import logo from '../../asset/Sampurna_logo_tagline.png'
 const MainHeader = (props) => {
   return (
     <>
-    <h1>Learning Module</h1>
-    <header className={classes['main-header']}>
-      <img src={logo} alt={logo} />
-      <Navigation className={classes.navContainer} />
+      <h1 className={classes.module_name}>Learning Module</h1>
+      <header className={classes['main-header']}>
+        <img src={logo} alt={logo} className={classes.banner_img} />
+        <Navigation className={classes.navContainer} />
       </header>
-     
     </>
   );
 };

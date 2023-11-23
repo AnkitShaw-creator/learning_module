@@ -9,14 +9,18 @@ exports.login = async (REQ, RES) => {
         const { EmpCode, password } = REQ.body // retrieveing the user empcode and password
         
         //console.log(EmpCode, password);
-        const query = "SELECT * FROM users WHERE EmpCode = ?"; // query for the authenticating the user
-
+        /** query for the authenticating the user and retriving */ 
+        const query = "SELECT u.EmpCode, u.FirstName, u.MiddleName, u.LastName, u.email, u.password, u.role, u.DOJ, u.LastLogin, u.img FROM users u "+ 
+              "WHERE u.EmpCode = ?;"
+            + "SELECT d.department FROM departments d WHERE d.EmpCode = ?;";
+        // the department column in the users table is only for development purpose and it wont be useful for implementing business logic
         
         Database  = mysql.createConnection({  //creating the connection to db
             host: process.env.SQL_HOST,
             port: process.env.SQL_PORT, 
             user: process.env.SQL_USER,    // in prod, include password
-            database: process.env.SQL_DATABASE
+            database: process.env.SQL_DATABASE,
+            multipleStatements: true
         });
         Database.connect((err) => { // connecting with the database
             if (err)
@@ -26,12 +30,13 @@ exports.login = async (REQ, RES) => {
         });
         
         // quering the database to check if the combination of username and password exists or not
-        Database.query(query, [EmpCode], (err, data) => { 
+        Database.query(query, [EmpCode, EmpCode], (err, data) => { 
             if (err) {
                 console.error(err); // to display the errors that have occured during retrieving the data
             }
             if (data.length > 0) {
-                bcrypt.compare(password, data[0].password).then((res) => {
+                //console.log(data);
+                bcrypt.compare(password, data[0][0].password).then((res) => {
                     // checking where the password hash in db is matching with the enter password
                     if (res) {
                         console.log("Login successful");
@@ -39,6 +44,7 @@ exports.login = async (REQ, RES) => {
                         //res.cookie('uid', data[0])
                         //console.log(token);
                         RES.cookie('user', token)
+                        RES.cookie('prf_img', data[0][0].img)
                         return RES.status(200).json({"message": "Logged in", "userinfo": data})
                     }
                     else {

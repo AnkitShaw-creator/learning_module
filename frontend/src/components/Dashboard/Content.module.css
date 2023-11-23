@@ -21,8 +21,8 @@
     transition-delay: 100ms;
 }
 
-.course h6,h5 {
-    opacity: 0.6;
+.course h6,h5, p {
+    opacity: 0.7;
     text-transform: uppercase;
 }
 
@@ -56,7 +56,7 @@
 .course_preview:hover {}
 
 .course_info {
-    padding-top: 4rem;
+    padding-top: 3rem;
     position: relative;
     width: 90%;
     font-size: 12px;
@@ -122,9 +122,9 @@
     }
 
     .progress_container {
-        /* left: 70px;
-        top: 10px;
-        position: absolute; */
+        left: 30%;
+        top: 10%;
+        position: absolute;
     }
 
     .course_info {
@@ -135,5 +135,9 @@
         margin: 10px;
         bottom: 10px;
         right: 10px;
+    }
+    .course_preview{
+        font-size: 10px;
+        font-size-adjust: 0.58;
     }
 }

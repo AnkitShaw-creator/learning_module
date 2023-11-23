@@ -6,11 +6,11 @@ exports.courses = async (req, res) => {
     try {
         console.log("request body:",req.body);
     
-        const department = req.body.department
+        const departments = req.body.departments
         const role = req.body.role
 
-        console.log(department, role);
-        const query = "select * from courses where department = ? and role = ? ;"; //query for retrieveing the data from courses table
+        console.log(departments, role);
+        const query = "select * from courses where department in (?) and role = ? ;"; //query for retrieveing the data from courses table
         Database  = mysql.createConnection({  
             host: process.env.SQL_HOST,
             port: process.env.SQL_PORT,
@@ -24,23 +24,23 @@ exports.courses = async (req, res) => {
                 console.log("Connection successful:userCourse");
         })
 
-        Database.query(query, [department, role], (err, data) => {
+        Database.query(query, [departments, role], (err, data) => {
             if (err) {
                 console.log(err);
             }
             if (data.length > 0) {
-                console.log(data);
+                //console.log(data);
                 console.log("Data retrieved successfully: userCourse");
                 return res.status(200).json({data})
             }
             else {
-                console.log(data);
+                //console.log(data);
                 console.log("data not retrieved");
                 res.status(404).json({"message":"data not retrived"})
             }
         })
         Database.end();
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }

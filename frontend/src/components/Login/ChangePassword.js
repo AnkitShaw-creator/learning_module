@@ -9,6 +9,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import AuthContext from "../../context/auth-context";
 
 const regex = /[a-zA-z]+/;  // regex to check if the empcode contains
+const regex_password = /[a-zA-z0-9]/; //regex to check if the password is alphanumeric or not
 const passwordReducer = (state, action) => { // reducer to manage state for both old and new password 
     if (action.type === "USER_INPUT") {
         return { value: action.val, isValid: action.val.trim().length >= 8 };
@@ -79,6 +80,11 @@ const ChangePassword = (props) => {
                 return
             }
             else {
+                if (oldPasswordState.value !== newPasswordState.value) {
+                    if (!regex_password.test(newPasswordState.value)) {
+                        setError("Password should be alphanumeric")
+                    }
+                }
                 console.log(empCodeState.value, oldPasswordState.value, newPasswordState.value);
                 const values = {
                     EmpCode: empCodeState.value,
@@ -91,6 +97,7 @@ const ChangePassword = (props) => {
                         if (res.status === 200) {
                             console.log(res)
                             context.onLogOut()
+                            alert("Password changed succesfully")
                             navigate('/login')
                         }
                     })
@@ -130,51 +137,62 @@ const ChangePassword = (props) => {
         <div className={classes.container}>  
             <Link to='/login' className={classes.backnav}>
                 <MdKeyboardArrowLeft className={classes.icon} style={{
-                    width: '1.6rem', height: '2rem', 'marginTop':'1rem'
+                    width: '1.6rem', height: '2rem', 'marginTop':'0.8rem'
                 }} />
-                <h6>Back to Login</h6>
+                <p>Back to Login</p>
             </Link>
-            <Card className={classes.change}>
-                <form onSubmit={formSubmitHandler}>
-                    <Input
-                        ref={oldPasswordRef}
-                        id="empcode"
-                        type="text" 
-                        label="Empcode" 
-                        value={empCodeState.value} 
-                        isValid={empCodeState.isValid} 
-                        onChange={empCodeChangeHandler} 
-                        onBlur={validateEmpCodePassword}
-                        disabled={false}
-                    ></Input>
-                    <Input
-                        ref={oldPasswordRef}
-                        id="oldPassword"
-                        type="password" 
-                        label="Old Password" 
-                        value={oldPasswordState.value} 
-                        isValid={oldPasswordState.isValid} 
-                        onChange={oldPasswordChangeHandler} 
-                        onBlur={validateOldPassword}
-                        disabled={false}
-                    ></Input>
-                    <Input
-                        ref={newPasswordRef}
-                        id="newPassword"
-                        type="password" 
-                        label="New Password" 
-                        value={newPasswordState.state} 
-                        isValid={newPasswordState.isValid} 
-                        onChange={newPasswordChangeHandler} 
-                        onBlur={validateNewPassword}
-                    ></Input>
-                    <div className={classes.actions}>
-                        <Button type='submit' disabled={!formIsValid}>Change Password</Button>
-                    </div>
-                </form>
-                
-                {error && <p className={classes.error}>{error.toString()}</p>}
-            </Card>
+            <div className={classes.password_form_container}>
+                <Card className={classes.change}>
+                    <form onSubmit={formSubmitHandler}>
+                        <Input
+                            ref={oldPasswordRef}
+                            id="empcode"
+                            type="text" 
+                            label="Empcode" 
+                            value={empCodeState.value} 
+                            isValid={empCodeState.isValid} 
+                            onChange={empCodeChangeHandler} 
+                            onBlur={validateEmpCodePassword}
+                            disabled={false}
+                        ></Input>
+                        <Input
+                            ref={oldPasswordRef}
+                            id="oldPassword"
+                            type="password" 
+                            label="Old Password" 
+                            value={oldPasswordState.value} 
+                            isValid={oldPasswordState.isValid} 
+                            onChange={oldPasswordChangeHandler} 
+                            onBlur={validateOldPassword}
+                            disabled={false}
+                        ></Input>
+                        <Input
+                            ref={newPasswordRef}
+                            id="newPassword"
+                            type="password" 
+                            label="New Password" 
+                            value={newPasswordState.state} 
+                            isValid={newPasswordState.isValid} 
+                            onChange={newPasswordChangeHandler} 
+                            onBlur={validateNewPassword}
+                        ></Input>
+                        <div className={classes.actions}>
+                            <Button type='submit' disabled={!formIsValid}>Change Password</Button>
+                        </div>
+                    </form>
+                    {error && <p className={classes.error}>{error.toString()}</p>}
+                </Card>
+                <Card className={classes.instructions}>
+                    <p>
+                        <center><b>Password Policy</b></center>
+                        <ul>
+                            <li>The password should conatin atleast 8 character</li>
+                            <li>Password should be alphanumeric</li>
+                            <li>New password should not be same as the old password</li>
+                        </ul>
+                    </p>
+                </Card>
+            </div>
         </div>
         
     );

@@ -1,6 +1,6 @@
 
 import './App.css';
-import { createBrowserRouter, Routes, Route, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './components/Home/Home';
 import ErrorPage from './components/Error/ErrorPage';
 import CourseContent from './components/CourseContent/CourseContent';
@@ -21,8 +21,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: '', element: <Home /> },
-      { path: '/dashboard', element:<Dashboard/> },
-      { path: '/login', element:<Login/> },
+      { path: '/login', element: <Login /> },
+      { path: '/dashboard', element: <Dashboard /> },
       { path: '/profile', element: <Profile/> },
       { path: '/course-content/:courseCode', element: <CourseContent /> },
       { path: '/course-content/:courseCode/:url', element: <MediaDisplay/>},

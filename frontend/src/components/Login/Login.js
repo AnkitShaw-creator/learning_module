@@ -92,6 +92,7 @@ const Login = (props) => {
                 password: passwordState.value
             }
             axios.defaults.withCredentials = true;
+            console.log(`${process.env.REACT_APP_SERVER_URL}/login`);
             axios.post('http://localhost:8000/login', values)
                     .then(res => {
                         if(res.status === 200){
@@ -120,7 +121,7 @@ const Login = (props) => {
     }
 
     return (
-        <>
+        <div className={classes.container}>
             <Card className={classes.login}>
                 <form onSubmit={SubmitHandler}>
                     <Input
@@ -155,7 +156,7 @@ const Login = (props) => {
             <Card className={classes.links}>
                 <Link to='/changepassword' className={classes.trigger}>Forgot Password?</Link>
             </Card>
-        </>
+        </div>
     );
 }
 
