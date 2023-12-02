@@ -1,36 +1,55 @@
-.container{
+.container {
     display: flex;
     flex-flow: column;
     flex-wrap: wrap;
-    padding-top: 5px;
+    padding-top: 2%;
     width: 100%;
     align-content: center;
+    margin-bottom: 3rem;
+
 }
 
-.player{
-    width: 90%;
+.content_message {
+    font-size: 32px;
+    text-align: center;
+    text-wrap: pretty;
+}
+
+.player {
+    width: 100%;
     position: relative;
     padding-top: 56.25%;
     /* Player ratio: 100 / (1280 / 720) */
 }
-.react_player{
+
+.react_player {
     width: 100%;
-    height: 90%;
+    height: 70%;
     position: absolute;
     top: 0;
     left: 0;
 }
 
-.completeButton{
-    width: 20%;
-    text-align: center;
-    position: absolute;
-    top: 80%;
-    left: 50%;
+.button_div {
+    align-content: center;
+    justify-content: center;
 }
 
+/* .completeButton{
+    width: 20%;
+    position: relative;
+    left: 2rem;
+} */
+
 @media (max-width: 700px) {
-    .react_player{
-        height: 100%;
+    .react_player {
+        width: 100%;
+        margin-top: 15%;
+    }
+
+    .completeButton {
+        top: 90%;
+        width: 70%;
+        left: 1%;
     }
 }

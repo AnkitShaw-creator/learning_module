@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import classes from "./NavList.module.css";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-
+import { FiChevronDown, FiChevronUp, FiInfo } from "react-icons/fi";
+import { useParams, useNavigate } from "react-router-dom";
+import Tooltip from '@mui/material/Tooltip';
+import { Button } from "@mui/material";
 function NavList(props) {
   const [list, setList] = useState();
   const [showLinks, setShowLinks] = useState(false);
   const data = props.topicData;
+  const { courseCode, topicId, linkId } = useParams();
+  const navigate = useNavigate();
+  const [hover, setHover] = useState(false);
+  const onHover = () => {
+    setHover(true);
+  };
 
-  
+  const onLeave = () => {
+    setHover(false);
+  };  
 
   useEffect(() => {
     const values = {
@@ -22,46 +32,51 @@ function NavList(props) {
     
   }, [props.course, props.subTopic, props.topic]);
 
-  const clickHandler = (url) => {
-    props.clickHandler(url);
-    console.log("Click function called:", url);
+  const clickHandler = (name) => {
+    const linkid = parseInt(name.match(/(\d+)/));
+    // console.log(linkid, typeof(linkid));
+    navigate(`/course-content/${courseCode}/${topicId}/${linkid}`)
   };
 
   const linkDisplayHandler = () => {
     setShowLinks(!showLinks);
   };
 
-
-  //console.log(data);
   return (
     <div className={classes.topics}>
       <div className={classes.topic_header}>
-        <p className={classes.header}>{data.topic}</p>
-        <h6>{data.mandatory===1 && `Due by ${data.endDate}` }</h6>
         <div className={classes.icon}>
           {!showLinks ?
             (<FiChevronDown onClick={linkDisplayHandler} />):
             (<FiChevronUp onClick={linkDisplayHandler} />)
           }
         </div>
+        <p className={classes.header}>{data.topic}</p>
+        {data.mandatory === 1 &&
+          <Tooltip  disableFocusListener title={`Due by ${data.endDate}`} placement="right"> 
+            <Button sx={{
+              m: 1, position: 'static', marginRight: '5px'
+            }} ><FiInfo /></Button>
+          </Tooltip>
+        }
       </div>
       <div className={classes.navlist}>
         {showLinks && (
-          <ul>
+          <div>
             {list &&
               list.map((row) => {
                 return (
-                  <li
-                    id={row.id}
-                    onClick={() => {
-                      clickHandler(row.links);
-                    }}
-                  >
-                    {row.link_name}
-                  </li>
+                  <div className={classes.link_row}>
+                    <p
+                      id={row.id}
+                      onClick={() => { clickHandler(row.link_name); } }>
+                      {row.link_name}
+                    </p>
+                      <input  type="checkbox"/>
+                  </ div>
                 );
               })}
-          </ul>
+          </div>
         )}
       </div>
     </div>

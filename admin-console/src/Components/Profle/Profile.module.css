@@ -1,0 +1,111 @@
+.container{
+    padding: 4rem;
+    width: 50%;
+    height: 100%;
+    margin: 5rem auto;
+    display: flex;
+    flex-direction: column;
+}
+.displayContent {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+}
+/* .welcome_box {
+    margin: 1rem;
+    padding: 2rem;
+    width: 80%;
+    margin: 2rem auto;
+    text-align: center;
+    border-radius: 5px;
+    color: #14213d;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    align-content: center;
+    justify-content: space-between;
+
+} */
+
+.initials {
+    width: 10%;
+    font-size: 32px;
+    text-align: center;
+    background-color: #14213d;
+    color: white;
+    margin-left: 45%;
+    padding: 35px;
+    border-radius: 60px;
+    position: relative;
+}
+.image_form{
+    align-content: center;
+    display: flex;
+    flex-flow: row;
+    text-align: center;
+    gap: 2rem;
+
+}
+.details{
+    align-self: center;
+    text-align: left;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.img_change {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    background: #14213d;
+    border: 1px solid #14213d;
+    width: 60%;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+    border-radius: 8px;
+}
+.img_change_cancel{
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    background: #782f27;
+    border: 1px solid #14213d;
+    width: 50%;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+    border-radius: 8px;
+}
+
+.img_upload_controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 10px;
+    color: white;
+}
+
+@media (max-width: 850px) {
+    .container{
+        padding: 1rem;
+        width: 80%;
+        margin: 2rem auto;
+    }
+    .image_form {
+        align-items: center;
+        flex-direction: column;
+    }
+    .details{
+        font-size: 12px;
+        margin-left: 2rem;
+    }
+    .img_upload_controls{
+        flex-direction: column;
+    }
+
+}
+@media(max-width: 1100px){
+    .img_upload_controls {
+        flex-direction: column;
+    }
+}

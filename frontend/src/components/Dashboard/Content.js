@@ -1,19 +1,16 @@
 import Button from '../UI/Button/Button';
 import classes from './Content.module.css'
-import {useNavigate,} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode';
-//import { useEffect, useRef } from 'react';
 
 const Content = (props) => {
     const course = props.data  //data to inflate in the course card
     const navigate = useNavigate()
     const [cookies] = useCookies('user') // accessing the user cookies
     var token = jwt_decode(cookies.user) // deccoding the cookie
-    var user = token.data.at(0); // accessing the data
-    // var start_date = useRef('')
-    // var end_date = useRef('')
+    var user = token.data.at(0).at(0); // accessing the data
 
     // useEffect(() => {
     //     const values = {
@@ -37,7 +34,6 @@ const Content = (props) => {
     //         })
     // },[user.EmpCode, course.courseCode])
 
-    // console.log(`end_date: ${end_date}`);
     const getDate = (days) => {
         var date = new Date()
         date.setDate(date.getDate() + days);
@@ -48,9 +44,6 @@ const Content = (props) => {
         return `${yyyy}-${mm}-${dd}`;
     }
 
-
-
-
     const navContentHandler = () => {
         const values = {
             EmpCode: user.EmpCode,
@@ -59,10 +52,13 @@ const Content = (props) => {
             startDate: getDate(0),
             endDate: getDate(course.duration)
         }
-        //console.log(values);
+
         axios.post('http://localhost:8000/courseDuration/add', values)
             .then(res => {
                 console.log(res);
+                navigate(`/course-content/${course.courseCode}/introduction/1`,
+                    { state: { data: course, EmpCode: user.EmpCode } }
+                )
             })
             .catch(err => {
                 if (err.response) {
@@ -70,9 +66,7 @@ const Content = (props) => {
                 }
             })
         
-        navigate(`/course-content/${course.courseCode}`
-            , { state: { data: course, EmpCode: user.EmpCode } }
-        )
+        
     }
 
     return (
@@ -88,7 +82,6 @@ const Content = (props) => {
                         <div className={classes.progress}/>
                         <span className={classes.progress_text}>
                             6/9 Completed <br></br>
-                            {/* {end_date.current ? `Due by ${end_date.current}` : 'Not started yet'} */}
                         </span>
                     </div>
                     <h5>Course</h5>

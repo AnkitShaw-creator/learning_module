@@ -10,7 +10,10 @@ import { NavLink, useNavigate, Link } from "react-router-dom";
 const Navigation = () => {
   const context = useContext(AuthContext) // using the auth context
   const navigation = useNavigate()
+
+
   const logoutHandler = () => {
+    alert('You will be logged out of the application. Do you still want to continue?')
     context.onLogOut()
     navigation('/login')
   }

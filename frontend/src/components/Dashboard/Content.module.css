@@ -21,7 +21,7 @@
     transition-delay: 100ms;
 }
 
-.course h6,h5, p {
+.course h6,h5 {
     opacity: 0.7;
     text-transform: uppercase;
 }
@@ -52,8 +52,6 @@
     margin-top: 30px;
     text-decoration: none;
 }
-
-.course_preview:hover {}
 
 .course_info {
     padding-top: 3rem;

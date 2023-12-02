@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 
 exports.login = async (REQ, RES) => {
     try {
-        console.log(REQ.body);
+        //1console.log(REQ.body);
         const { EmpCode, password } = REQ.body // retrieveing the user empcode and password
         
         //console.log(EmpCode, password);
@@ -16,13 +16,13 @@ exports.login = async (REQ, RES) => {
         // the department column in the users table is only for development purpose and it wont be useful for implementing business logic
         
         Database  = mysql.createConnection({  //creating the connection to db
-            host: process.env.SQL_HOST,
-            port: process.env.SQL_PORT, 
-            user: process.env.SQL_USER,    // in prod, include password
-            database: process.env.SQL_DATABASE,
-            multipleStatements: true
+            host: process.env.SQL_HOST, // location where the sql is hosted
+            port: process.env.SQL_PORT, // sql port, by default 3306
+            user: process.env.SQL_USER, // in prod, include password , in dev, its the root user
+            database: process.env.SQL_DATABASE, // database name declared in env filers
+            multipleStatements: true  // set to true as multiple queries are running here in parallel
         });
-        Database.connect((err) => { // connecting with the database
+        Database.connect((err) => { // connecting to the database
             if (err)
                 console.error(`connection distrupted due to error: ${err}`);
             else

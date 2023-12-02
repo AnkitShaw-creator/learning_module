@@ -7,7 +7,7 @@ const { readdirSync } = require('fs')
 const path = require('path')
 
 const options = {
-    origin: ['http://localhost:3000'], // add the url which should have access to the server , "*" means everyone can access the server
+    origin: ['http://localhost:3000', 'http://localhost:5000', '*'], // add the url which should have access to the server , "*" means everyone can access the server
     useSuccessStatus: 200,
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
@@ -18,11 +18,6 @@ const server = express()
 server.use(cors(options)) // for allowing cross-origin-routing-option
 server.use('/static', express.static(path.join(__dirname, '/public'))) // to serve the static files like images, vidoes etc
 server.use(express.json()) // so that json data can be pulled or pushed in the app
-
-// server.get('/', (req, res) => {
-//     res.end("HI there")    /* for testign purposes only can be deleted if not requried */
-// })
-
 
 /*this will create the routes for all the files in route folder*/
 try {

@@ -5,9 +5,9 @@
     width: 100%;
     display: flex;
     flex-flow: row;
-    align-content: first baseline;
     background: #FCA311;
     justify-content: space-between;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 .module_name {
@@ -31,7 +31,7 @@
     margin-right:5%;
     width: 30%;
     font-size: 12px;
-    position: fixed;
+    position: relative;
     z-index:index 2;
 }
 
@@ -43,7 +43,7 @@
         justify-content: center;
     }
     .main-header img{
-        width: 4rem;
+        width: 5rem;
         height: 4rem;
         align-self: center;
     }
@@ -53,13 +53,23 @@
     }
     .navContainer{
         font-size:8px;
-        margin-left: 0%;
     }
 }
 @media(max-width: 1000px){
     .module_name{
         top:1rem;
         font-size: 24px;
-        left:30%;
+        left: 20%;
+    }
+    .main-header{
+        flex-flow: column;
+        justify-content: space-around;
+        align-content: center;
+    }
+    .banner_img{
+        margin-left: 1rem;
+    }
+    .navContainer{
+        margin-left: 0%;
     }
 }

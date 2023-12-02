@@ -4,9 +4,9 @@ const mysql = require('mysql')
 
 exports.getLinks = async (req, res) => {
     try {
-        console.log(req.body);
+        //console.log(req.body);
         const {courseCode, topic } = req.body
-        console.log(courseCode, topic);
+        //console.log(courseCode, topic);
         
         const query = "select link_name, links, link_type from topics where courseCode= ? and topic = ?;";
         // const query = "select t.topic, t.mandatory, t.link_name, t.links, t.link_type, duration, "
@@ -14,10 +14,10 @@ exports.getLinks = async (req, res) => {
         //     + " h.courseCode = ? and h.EmpCode = ?;"; // getting each rows from the topics table for a particular topics 
 
         Database  = mysql.createConnection({  //creating the connection to db
-                host: process.env.SQL_HOST,
-                port: process.env.SQL_PORT, 
-                user: process.env.SQL_USER,    // in prod, include password
-                database: process.env.SQL_DATABASE
+            host: process.env.SQL_HOST, // location where the sql is hosted
+            port: process.env.SQL_PORT, // sql port, by default 3306
+            user: process.env.SQL_USER, // in prod, include password , in dev, its the root user
+            database: process.env.SQL_DATABASE, // database name declared in env file
         });
         Database.connect((err) => { // connecting with the database
             if (err)

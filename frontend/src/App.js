@@ -24,9 +24,14 @@ const router = createBrowserRouter([
       { path: '/login', element: <Login /> },
       { path: '/dashboard', element: <Dashboard /> },
       { path: '/profile', element: <Profile/> },
-      { path: '/course-content/:courseCode', element: <CourseContent /> },
-      { path: '/course-content/:courseCode/:url', element: <MediaDisplay/>},
-      { path:'/changePassword', element: <ChangePassword/> }
+      {
+        path: '/course-content/:courseCode', element: <CourseContent />,
+        children: [
+          { path: '/course-content/:courseCode/:topicId/:linkId', element: <MediaDisplay/>},
+        ]
+      },
+      { path: '/changePassword', element: <ChangePassword /> },
+      
     ],
   }
 ])

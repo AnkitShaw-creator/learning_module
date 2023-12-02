@@ -1,53 +1,39 @@
 .container{
     position: relative;
     width: 90%;
-    background: rgb(235, 230, 230);
     color: black;
     margin-bottom: 2.5rem;
 }
 
 .course{
-    position: absolute;
-    max-height: 100vh;
-    text-align: left;
+    position: relative;
+    height: 80vh;
     width: 100%;
-    overflow-y:auto;
-    margin-bottom: 3rem;
+    overflow-y: auto;
     scroll-behavior: smooth;
+    background: rgb(248, 96, 96);
 }
 .courseName{
     display: flex;
-    flex-flow: row;
-    height: fit-content;
+    flex-flow: column;
     align-content:flex-start;
-    font-size: 18px;
-    border: 2px solid black;
+    text-align: left;
+    padding-left: 1rem;
 }
 
 .course_id{
-    padding: 10px;
-    width: fit-content;
-    height: 100%;
-    align-self: center;
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-    
+    text-wrap: wrap;
+    text-align: left;
+    font-size: 14px;
 }
 
 .course_name{
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-    padding: 10px;
-    height: 100%;
     text-wrap: wrap;
     text-align: left;
-    align-self: center;
-    border-left: 2px solid black;
-    background-color: aqua;
-    border-radius: 8px;
+    font-size: 14px;
 }
 .list{
-    border:2px solid black;
+    width: 90%;
     margin-bottom: 2.5rem;
 }
 
@@ -55,22 +41,24 @@
     margin-top: 5px;
     margin-left: 5px;
     text-decoration: none;
+    padding: 2rem;
+
 }
 
 .topic_header{
     display: flex;
     flex-flow: row;
-    padding: 5px;
+    padding: 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
     justify-content: space-between;
     font-size: 16px;
+    background-color: rgb(194 167 167)
 }
 
 .icon{
     align-self: center;
     display: flex;
     position: absolute;
-    right: 0px;
 }
 .icon:hover{
     cursor: pointer;
@@ -83,9 +71,9 @@
 
 @media (max-width: 700px){
     .container{
-        font-size: 6px;
+        font-size: 10px;
     }
     .courseName{
-        font-size: 8px;
+        font-size: 10px;
     }
 }

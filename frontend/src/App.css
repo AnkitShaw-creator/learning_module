@@ -2,6 +2,9 @@
   width: 100%;
   margin: 0px;
 }
+.App p {
+  text-transform: uppercase;
+}
 
 .App-link {
   color: #61dafb;

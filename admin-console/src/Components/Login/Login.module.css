@@ -1,0 +1,51 @@
+.container{
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+
+.login {
+    width: 40%;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: left;
+}
+
+
+.actions {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+
+.error{
+    padding: 5px;
+    background-color: rgba(255, 0, 0, 0.366);
+}
+
+.links{
+    width: 40%;
+    margin: 1rem auto;
+    padding: 1rem;
+    text-align: center;
+    background-color: #14213d;
+}
+
+.trigger {
+    align-self: center;
+    color: white;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    /* .control {
+        align-items: center;
+        flex-direction: row;
+    } */
+    .login{
+        width: 80%;
+    }
+
+}

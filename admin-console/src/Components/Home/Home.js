@@ -1,0 +1,38 @@
+import {useEffect, useContext} from 'react'
+import {Outlet, useNavigate} from 'react-router-dom'
+import AuthContext from "../../context/auth-context";
+import MainHeader from '../Header/MainHeader';
+import classes from './Home.module.css'
+import Footer from '../Footer/Footer';
+const Home = () => { 
+
+    const context = useContext(AuthContext)
+    //const [cookie, setCookie, removeCookie] = useCookies(['user'])
+    //const { state } = useLocation()
+    const navigate = useNavigate()
+    let userData = null// will hold user info that is retrieved from backend
+
+    useEffect(() => {
+        console.log(context.isLoggedIn);
+        if (!context.isLoggedIn) {
+            navigate('/admin/login')
+        }
+        else {
+            navigate('/admin/dashboard')
+        }
+    }, [context, userData])
+
+    return (
+        <div className={classes.home}>
+            <MainHeader userInfo={userData} />
+            <div className={classes.outlet}>
+                <Outlet/>
+            </div>
+            <Footer />
+        </div>
+        
+    );
+    
+}
+
+export default Home;

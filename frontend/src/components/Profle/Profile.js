@@ -9,6 +9,8 @@ import Input from '../UI/Input/Input'
 import placeholder from '../../asset/holder_img.jpg'
 import { useEffect, useState } from 'react';
 import axios from 'axios'
+import Avatar from '@mui/material/Avatar'; // to display the avatar
+import { deepOrange } from '@mui/material/colors';
 
 const Profile = () => {
     const [cookies, setCookie] = useCookies(['user', 'prf_img']) // accessing the user cookies
@@ -69,7 +71,7 @@ const Profile = () => {
         <Card className={classes.container}>
             <div className={classes.displayContent}>
                 <form className={classes.image_form} onSubmit={uploadImageHandler}>
-                    <img width="150px" src={`http://localhost:8000/static/images/${cookies.prf_img}`} alt='' />
+                    <Avatar sx={{ width: 156, height: 156, border: '2px solid orange' }} src={`http://localhost:8000/static/images/${cookies.prf_img}`} alt='' />
                     <div className={classes.details}>
                         <span>Email: {user.email}</span> 
                         <span>Department: {departments.map(d=>{return d.department+", "})}</span>
@@ -83,12 +85,10 @@ const Profile = () => {
                             {buttonClicked && <Button
                                 className={classes.img_change_cancel}
                                 onClick={()=>{setButtonClicked(false)}}>
-                                {"Cancel upload"}
+                                Cancel upload
                             </Button>}
                         </div>
                     </div>
-                    
-                    
                 </form>
                 <Input
                     id="empcode"

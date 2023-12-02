@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/images')
     },
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + "_profile_image_" + Date.now() + path.extname(file.originalname))
+        cb(null, file.fieldname + "_profile_image_" + Math.floor(Math.random() * (1000000 - 1)) + "_" + Date.now() + path.extname(file.originalname))
     }
 })
 const upload = multer({

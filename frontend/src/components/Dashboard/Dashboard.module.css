@@ -18,7 +18,8 @@
     flex-flow: row;
     flex-wrap: wrap;
     align-content: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap:2rem;
 
 }
 

@@ -4,7 +4,7 @@ const mysql = require('mysql')
 
 exports.courses = async (req, res) => {
     try {
-        console.log("request body:",req.body);
+        //console.log("request body:",req.body);
     
         const departments = req.body.departments
         const role = req.body.role
@@ -12,10 +12,10 @@ exports.courses = async (req, res) => {
         console.log(departments, role);
         const query = "select * from courses where department in (?) and role = ? ;"; //query for retrieveing the data from courses table
         Database  = mysql.createConnection({  
-            host: process.env.SQL_HOST,
-            port: process.env.SQL_PORT,
-            user: process.env.SQL_USER,   // in prod, include password
-            database: process.env.SQL_DATABASE
+            host: process.env.SQL_HOST, // location where the sql is hosted
+            port: process.env.SQL_PORT, // sql port, by default 3306
+            user: process.env.SQL_USER, // in prod, include password , in dev, its the root user
+            database: process.env.SQL_DATABASE, // database name declared in env file
         });
         Database.connect((err) => {
             if (err)

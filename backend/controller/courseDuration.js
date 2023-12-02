@@ -7,13 +7,13 @@ exports.courseDuration = async (req, res) => {
         const { EmpCode, courseCode} = req.body // retrieveing the user empcode and password
         
         // console.log(EmpCode, action, course, startDate, endDate);
-        const query1 = "select * from history where EmpCode = ? and courseCode = ?;"; // to see if start date and end date exists or not
+        const query1 = "select * from checkpoints where EmpCode = ? and courseCode = ?;"; // to see if start date and end date exists or not
 
         Database  = mysql.createConnection({  //creating the connection to db
-            host: process.env.SQL_HOST,
-            port: process.env.SQL_PORT, 
-            user: process.env.SQL_USER,    // in prod, include password
-            database: process.env.SQL_DATABASE
+            host: process.env.SQL_HOST, // location where the sql is hosted
+            port: process.env.SQL_PORT, // sql port, by default 3306
+            user: process.env.SQL_USER, // in prod, include password , in dev, its the root user
+            database: process.env.SQL_DATABASE, // database name declared in env file
         });
         Database.connect((err) => { // connecting with the database
             if (err)
@@ -45,7 +45,7 @@ exports.addDuration = async (req, res) => {
         const { EmpCode, action, courseCode, startDate, endDate } = req.body // retrieveing the user empcode and password
         
         // console.log(EmpCode, action, course, startDate, endDate);
-        const query2 = "insert IGNORE into history (EmpCode, action, courseCode, startTime, endTime) values (?, ?, ?, ?, ?);"; // inserting in history
+        const query2 = "insert IGNORE into checkpoints (EmpCode, action, courseCode, startTime, endTime) values (?, ?, ?, ?, ?);"; // inserting in history
 
 
         Database  = mysql.createConnection({  //creating the connection to db
