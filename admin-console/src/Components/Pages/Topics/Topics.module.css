@@ -1,0 +1,28 @@
+h1 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.table_fixed_header {
+    background-color: #14213d;
+    color: aliceblue;
+}
+
+.add_user_btn {
+    position: relative;
+    width: 10rem;
+    height: 3rem;
+    margin-top: 3%;
+    background-color: #14213d;
+    color: aliceblue;
+    font-size: 10px;
+}
+.inputFieldContainer {
+    text-align: left;
+    padding: 1rem;
+    color: #14213d;
+}

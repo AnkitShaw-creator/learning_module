@@ -1,7 +1,7 @@
 .home {
     width: 100%;
-    height: fit-content;
     display: flex;
+    height: fit-content;
     flex-flow: column;
     text-align: center;
     align-content: center;

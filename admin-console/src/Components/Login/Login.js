@@ -6,7 +6,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import classes from './Login.module.css'
 import AuthContext from '../../context/auth-context';
-
+import LinearProgress from '@mui/material/LinearProgress';
 
 const regex = /[a-zA-z]+/;  // regex to check if the empcode contains
 
@@ -35,7 +35,7 @@ const Login = (props) => {
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
     const [formIsValid, setFormIsValid] = useState(false)
-
+    const [showProgress, setShowProgress] = useState(false)
     const [empcodeState, dispatchEmpCode] = useReducer(empcodeReducer, { value: "", isValid: false });
     const [passwordState, dispatchPassword] = useReducer(passwordReducer, { value: "", isValid: false });
     const [error, setError] = useState('')
@@ -67,7 +67,8 @@ const Login = (props) => {
     const validateEmpCode = () => { //checking for empcode validity
         if (regex.test(empcodeState.value)){
             setError("EmpCode can only contain numbers");
-            setFormIsValid(false)
+            setShowProgress(false);
+            setFormIsValid(false);
         }
         if (empcodeState.value.length > 6){
             setError("EmpCode can only contain 6 digits.")
@@ -84,8 +85,9 @@ const Login = (props) => {
 
     }
 
-    const SubmitHandler = (event) => {   //sending the value to backend
-        event.preventDefault()
+    const SubmitHandler = (event) => { //sending the value to backend
+        event.preventDefault();
+        setShowProgress(true);
         if(formIsValid){
             const values = {
                 EmpCode: empcodeState.value, // update the variable everywhere to in the to username, as per suggestion
@@ -93,34 +95,34 @@ const Login = (props) => {
             }
             axios.defaults.withCredentials = true;
             //console.log(`${process.env.REACT_APP_SERVER_URL}/login`);
-            axios.post('http://localhost:8000/login', values)
-                    .then(res => {
-                        if (res.status === 200) {
-                                console.log(res);
-                                ctx.onLogIn()
-                                navigate('/admin/dashboard', { state: { userdata: res['data']['userinfo'] } })
-                                console.log(res['data']['message']);
-                                console.log(res['data']['userinfo']);
-                            }
-                        else {
-                                console.error("Login failed");
-                                setError(res['data']['message']);
-                        }
-                    })
-                    .catch((error) =>{
-                        if (error.response) {
-                            console.error(`Server responded with code: ${error.response.status}`);
-                            setError("Empcode and password combination does not exists")
-                        }
-                    })
+            axios.post('http://localhost:8000/admin/login', values)
+                .then(res => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        console.log(res);
+                        ctx.onLogIn();
+                        window.location.reload(false);
+                        navigate('/admin/dashboard')
+                    }
+                    else {
+                        console.error("Login failed");
+                        setError(res['data']['message']);
+                        setShowProgress(false);
+                    }
+                })
+                .catch((error) =>{
+                    if (error.response) {
+                        console.error(`Server responded with code: ${error.response.status}`);
+                        setError("Empcode and password combination does not exists");
+                        setShowProgress(false);
+                    }
+                })
         }
         else if (!empcodeState.isValid)
             empCodeRef.current.focus()
         else
             passwordRef.current.focus()
-
     }
-
     return (
         <div className={classes.container}>
             <Card className={classes.login}>
@@ -150,13 +152,15 @@ const Login = (props) => {
                     <div className={classes.actions}>
                         <Button type="submit" disabled={!formIsValid}>Login</Button>
                     </div>
-                    
+                    {showProgress && <LinearProgress color='inherit'/>}
                 </form>
                 {error && <p className={classes.error}>{error.toString()}</p>}
             </Card>
-            <Card className={classes.links}>
-                <Link to='/admin/login/changePassword' className={classes.trigger}>Forgot Password?</Link>
-            </Card>
+            <Link to='/admin/changePassword' className={classes.links}>
+                <Card>
+                    Forgot Password?
+                </Card>
+            </Link> 
         </div>
     );
 }

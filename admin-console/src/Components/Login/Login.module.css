@@ -31,12 +31,15 @@
     padding: 1rem;
     text-align: center;
     background-color: #14213d;
+    border-radius: 100px;
+    text-decoration: none;
 }
 
 .trigger {
     align-self: center;
     color: white;
     text-decoration: none;
+
 }
 
 @media (max-width: 768px) {

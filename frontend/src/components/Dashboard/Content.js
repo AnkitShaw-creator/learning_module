@@ -4,6 +4,10 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode';
+import { useState, useEffect } from 'react';
+
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const Content = (props) => {
     const course = props.data  //data to inflate in the course card
@@ -11,29 +15,32 @@ const Content = (props) => {
     const [cookies] = useCookies('user') // accessing the user cookies
     var token = jwt_decode(cookies.user) // deccoding the cookie
     var user = token.data.at(0).at(0); // accessing the data
+    const [topicState, setTopicState] = useState({'completedTopics':0, 'totalTopics':0 })
 
-    // useEffect(() => {
-    //     const values = {
-    //         EmpCode: user.EmpCode,
-    //         courseCode: course.courseCode
-    //     }
-    //     //console.log(values);
-    //     axios.post('http://localhost:8000/courseDuration', values)
-    //         .then(res => {
-    //             console.log(res);
-    //             if (res.data.length > 0) {
-    //                 start_date.current = res.data.at(0).startTime
-    //                 end_date.current = res.data[0].endTime.toString().substr(0, 10);
-    //                 console.log(end_date);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             if (err.response) {
-    //                 console.error(`Server responded with code: ${err.response.status}`);
-    //             }
-    //         })
-    // },[user.EmpCode, course.courseCode])
 
+    useEffect(() => {
+        const values = {
+            EmpCode: user.EmpCode,
+            courseCode: course.courseCode
+        }
+        // console.log(values);
+        axios.post('http://localhost:8000/courseDuration', values)
+            .then(res => {
+                // console.log(res.data[0][0].count_topic_completed);
+                setTopicState({
+                    'completedTopics': res.data[0][0].count_topic_completed,
+                    'totalTopics': res.data[1][0].count_topic 
+                })
+                
+            })
+            .catch(err => {
+                if (err.response) {
+                    console.error(`Server responded with code: ${err.response.status}`);
+                }
+            })
+    },[])
+
+    //console.log(topicState);
     const getDate = (days) => {
         var date = new Date()
         date.setDate(date.getDate() + days);
@@ -55,8 +62,8 @@ const Content = (props) => {
 
         axios.post('http://localhost:8000/courseDuration/add', values)
             .then(res => {
-                console.log(res);
-                navigate(`/course-content/${course.courseCode}/introduction/1`,
+                //console.log(res.data.data[0].ID);
+                navigate(`/course-content/${course.courseCode}/${res.data.data[0].ID}`, // fix this 
                     { state: { data: course, EmpCode: user.EmpCode } }
                 )
             })
@@ -64,9 +71,7 @@ const Content = (props) => {
                 if (err.response) {
                     console.error(`Server responded with code: ${err.response.status}`);
                 }
-            })
-        
-        
+            })    
     }
 
     return (
@@ -75,13 +80,15 @@ const Content = (props) => {
                 <div className={classes.course_preview}>
                     <h6>Department</h6>
                     <p>{course.department}</p>
-                    <h6>Duration: {course.duration}</h6>
+                    <p style={{'fontSize':8}}>Duration: {course.duration}</p>
                 </div>
                 <div className={classes.course_info}>
                     <div className={classes.progress_container}>
-                        <div className={classes.progress}/>
+                        <Box sx={{ width: '100%' }}>
+                            <LinearProgress variant="determinate" value={(topicState.completedTopics*100) / topicState.totalTopics} />
+                        </Box>
                         <span className={classes.progress_text}>
-                            6/9 Completed <br></br>
+                            {topicState.completedTopics}/{topicState.totalTopics} Completed <br></br>
                         </span>
                     </div>
                     <h5>Course</h5>

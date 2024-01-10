@@ -16,13 +16,15 @@ const options = {
 
 const server = express()
 server.use(cors(options)) // for allowing cross-origin-routing-option
-server.use('/static', express.static(path.join(__dirname, '/public'))) // to serve the static files like images, vidoes etc
+server.use('/static', express.static('../../public'))
+// server.use('/static', express.static(path.join(__dirname, '/public'))) // to serve the static files like images, vidoes etc
 server.use(express.json()) // so that json data can be pulled or pushed in the app
 
 /*this will create the routes for all the files in route folder*/
 try {
     readdirSync('./routes').map((r) => { server.use('/', require('./routes/' + r))});
-// server.use('/api/v1', useHomeRoute) <- alternative way for ceating route
+    // change the above code to readdirSync('./routes').map((r) => { server.use('/backend/', require('./routes/' + r))});
+    // when deploying ('/backend/' being the root directory where the app files are stored)
     
 } catch (error) {
     console.log(error);

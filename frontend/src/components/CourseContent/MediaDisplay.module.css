@@ -16,7 +16,7 @@
 }
 
 .player {
-    width: 100%;
+    width: 90%;
     position: relative;
     padding-top: 56.25%;
     /* Player ratio: 100 / (1280 / 720) */
@@ -35,11 +35,12 @@
     justify-content: center;
 }
 
-/* .completeButton{
+.completeButton{
     width: 20%;
     position: relative;
     left: 2rem;
-} */
+    background-color: '#14213d';
+}
 
 @media (max-width: 700px) {
     .react_player {

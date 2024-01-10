@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       {
         path: '/course-content/:courseCode', element: <CourseContent />,
         children: [
-          { path: '/course-content/:courseCode/:topicId/:linkId', element: <MediaDisplay/>},
+          { path: '/course-content/:courseCode/:linkId', element: <MediaDisplay/>},
         ]
       },
       { path: '/changePassword', element: <ChangePassword /> },

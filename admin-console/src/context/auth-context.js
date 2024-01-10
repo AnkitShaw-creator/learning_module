@@ -10,33 +10,35 @@ const AuthContext = createContext({
 
 export const AuthContextProvider = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [cookie, setCookie, removeCookie] = useCookies(['user', 'prf_img'])
+    const [cookie, setCookie, removeCookie] = useCookies(['trtusrwer', 'prf_img'])
     
     useEffect(() => {
-        const userLogInInfo = cookie.user
+        const userLogInInfo = cookie.trtusrwer
         if (userLogInInfo) {
             //console.log(userLogInInfo);
             setIsLoggedIn(true)
         }
         
-    }, [isLoggedIn, cookie.user])
+    }, [isLoggedIn, cookie.trtusrwer])
 
 
     const logoutHandler = () => {
-        removeCookie('user', { path: '/', domain: 'localhost' })
-        removeCookie('prf_img', { path: '/', domain: 'localhost' })
+        removeCookie('trtusrwer')
+        removeCookie('prf_img')
         setIsLoggedIn(false)
+        console.log(isLoggedIn);
     }
     const logInHandler = () => {
-        if (cookie.user)
+        if (cookie.trtusrwer)
             setIsLoggedIn(true)
+        console.log(isLoggedIn);
     }
     return (
         <AuthContext.Provider
             value={{
                 isLoggedIn: isLoggedIn,
                 onLogOut: logoutHandler,
-                onLogIn:logInHandler
+                onLogIn: logInHandler
             }}>
             {props.children}
         </AuthContext.Provider>);

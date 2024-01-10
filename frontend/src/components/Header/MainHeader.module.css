@@ -11,20 +11,26 @@
 }
 
 .module_name {
+    left:0;
+    right: 0;
     color: #14213d;
+    top: 2.4rem;
     text-align: center;
     align-self: center;
-    top: 0.5rem;
     height: fit-content;
     position: absolute;
+    margin: 0px;
+    font-family: 'monospace';
+    text-transform: capitalize;
+    letter-spacing: 0.3rem;
 }
 
 .banner_img {
-    width: 6.5rem;
-    height: 6.5rem;
+    width: 7rem;
+    height: 7rem;
     object-fit: contain;
     background-color: transparent;
-    margin-left: 3rem;
+    margin-left: 2rem;
 }
 .navContainer{
     top:10%;
@@ -43,13 +49,15 @@
         justify-content: center;
     }
     .main-header img{
-        width: 5rem;
+        width: 6rem;
         height: 4rem;
         align-self: center;
     }
     .module_name{ 
-        margin-top: 2.5rem;
-        font-size: 18px;
+        margin-top: 2rem;
+        font-size: 20px;
+        text-align: center;
+        align-self: center;
     }
     .navContainer{
         font-size:8px;
@@ -57,14 +65,8 @@
 }
 @media(max-width: 1000px){
     .module_name{
-        top:1rem;
-        font-size: 24px;
-        left: 20%;
-    }
-    .main-header{
-        flex-flow: column;
-        justify-content: space-around;
-        align-content: center;
+        top:2rem;
+        font-size: 22px;
     }
     .banner_img{
         margin-left: 1rem;

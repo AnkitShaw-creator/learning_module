@@ -17,6 +17,7 @@ exports.courseDetail = async (req, res) => {
             host: process.env.SQL_HOST, // location where the sql is hosted
             port: process.env.SQL_PORT, // sql port, by default 3306
             user: process.env.SQL_USER, // in prod, include password , in dev, its the root user
+            password: process.env.SQL_PASSWORD, // database password declared in env file
             database: process.env.SQL_DATABASE, // database name declared in env file
         });
         Database.connect((err) => {

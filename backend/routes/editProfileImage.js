@@ -2,9 +2,10 @@
 require('dotenv').config()
 const express = require('express')
 const mysql = require('mysql');
+const multer = require('multer');
 const { editImage } = require('../controller/editImage')
-const multer = require('multer')
-const path = require('path')
+const path = require('path');
+const fs = require('fs');
 
 const route = express.Router()
 const storage = multer.diskStorage({
@@ -19,16 +20,20 @@ const upload = multer({
     storage: storage
 })
 route.post('/editImg', upload.single('image'), (req, res) => {
-    try {  
+    try {
+        //console.log(req);
         const image = req.file.filename;
-        const user = '011235'
-        console.log(image, user);
-        const query = "UPDATE users SET img = ? where EmpCode = ?;";
+        const user = req.body.user
+        //console.log(image, user);
+        const query = "SELECT img from users where EmpCode = ?;"
+            + "UPDATE users SET img = ? where EmpCode = ?;";
         Database  = mysql.createConnection({  //creating the connection to db
             host: process.env.SQL_HOST,
             port: process.env.SQL_PORT, 
             user: process.env.SQL_USER,    // in prod, include password
-            database: process.env.SQL_DATABASE
+            password: process.env.SQL_PASSWORD, // database password declared in env file
+            database: process.env.SQL_DATABASE,
+            multipleStatements: true
         });
         Database.connect((err) => { // connecting with the database
             if (err)
@@ -36,19 +41,25 @@ route.post('/editImg', upload.single('image'), (req, res) => {
             else
                 console.log("Connection successful: loginUser");
         });
-        Database.query(query, [image, user], (err, data) => {
+        Database.query(query, [user, image, user], (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).json({"message":"upload failed"})
             }
             else {
+                console.log(data[0][0].img);
+                fs.unlink(`public\\images\\${data[0][0].img}`,(err => {
+                    if (err) console.log(err); 
+                    else { 
+                        console.log(`\nDeleted file: ${data[0][0].img}`); 
+                    }
+                }))
                 console.log("upload successful");
-                // res.cookie('prf_img', image)
                 return res.status(202).json({"message":"upload was successful", "data":image})
             }
 
         })
-    } catch (error) {
+    }catch (error) {
         
     }
 })

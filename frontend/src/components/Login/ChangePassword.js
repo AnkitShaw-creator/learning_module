@@ -35,17 +35,18 @@ const ChangePassword = (props) => {
     const navigate = useNavigate()
     const context = useContext(AuthContext)
     const [empCodeState, dispatchEmpCode] = useReducer(empCodeReducer, { value: "", isValid: false })
-    const [oldPasswordState, dispatchOldPassword] = useReducer(passwordReducer, { value: "", isValid: false })
+    const [retypePasswordState, dispatchRetypePassword] = useReducer(passwordReducer, { value: "", isValid: false })
     const [newPasswordState, dispatchNewPassword] = useReducer(passwordReducer, { value: "", isValid: false })
     const [formIsValid, setFormIsValid] = useState(false) //state to manage the form validity
     const [error, setError] = useState('')  //state to manage the error
 
-    const oldPasswordRef = useRef()
+    const retypePasswordRef = useRef()
     const newPasswordRef = useRef()
+    const empCodeRef = useRef()
 
 
-    const oldPasswordChangeHandler = (event) => { 
-        dispatchOldPassword({type:"USER_INPUT", val: event.target.value })
+    const retypePasswordChangeHandler = (event) => { 
+        dispatchRetypePassword({type:"USER_INPUT", val: event.target.value })
 
     }
     const newPasswordChangeHandler = (event) => {
@@ -57,15 +58,15 @@ const ChangePassword = (props) => {
 
     useEffect(() => { // this code will run in every 500 ms 
         const identifier = setTimeout(() => {
-            setFormIsValid(oldPasswordState.isValid && newPasswordState.isValid)
+            setFormIsValid(retypePasswordState.isValid && newPasswordState.isValid)
             // validateForm()
             setError('')
         }, 200);
-        console.log(formIsValid);
+        //console.log(formIsValid);
         return () => {
             clearTimeout(identifier);
         }
-    }, [empCodeState, oldPasswordState, newPasswordState]);
+    }, [empCodeState, retypePasswordState, newPasswordState]);
 
 
     const formSubmitHandler = (event) => {
@@ -75,22 +76,22 @@ const ChangePassword = (props) => {
                 setError("EmpCode cannot contain alphabets")
                 return
             }
-            if (oldPasswordState.value === newPasswordState.value) {
-                setError("New Password and old password are the same")
+            if (retypePasswordState.value !== newPasswordState.value) {
+                setError("New Password and old password are not the same")
                 return
             }
             else {
-                if (oldPasswordState.value !== newPasswordState.value) {
+                if (retypePasswordState.value === newPasswordState.value) {
                     if (!regex_password.test(newPasswordState.value)) {
                         setError("Password should be alphanumeric")
                     }
                 }
-                console.log(empCodeState.value, oldPasswordState.value, newPasswordState.value);
+                console.log(empCodeState.value, retypePasswordState.value, newPasswordState.value);
                 const values = {
                     EmpCode: empCodeState.value,
                     newPassword: newPasswordState.value
                 }
-                console.log("Changing the password");
+                //console.log("Changing the password");
                 axios.post('http://localhost:8000/changePassword', values)
                     .then(res => {
                         //console.log("inside change password");
@@ -111,8 +112,8 @@ const ChangePassword = (props) => {
         }
         
     }
-    const validateOldPassword = () => {
-        dispatchOldPassword({type: "INPUT_BLUR"})
+    const retypeOldPassword = () => {
+        dispatchRetypePassword({type: "INPUT_BLUR"})
      }
     const validateNewPassword = () => {
         dispatchNewPassword({type: "INPUT_BLUR"})
@@ -124,6 +125,14 @@ const ChangePassword = (props) => {
         }
         if (empCodeState.value.length > 6){
             setError("EmpCode can only conatin 6 digits.")
+            setFormIsValid(false)
+        }
+        if (!regex_password.test(newPasswordState.value)) {
+            setError("The password field can must be alphanumeric.");
+            setFormIsValid(false)
+        }
+        if (newPasswordState.value !== retypePasswordState.value) {
+            setError("The passwords entered is not matching.")
             setFormIsValid(false)
         }
         else {
@@ -145,7 +154,7 @@ const ChangePassword = (props) => {
                 <Card className={classes.change}>
                     <form onSubmit={formSubmitHandler}>
                         <Input
-                            ref={oldPasswordRef}
+                            ref={empCodeRef}
                             id="empcode"
                             type="text" 
                             label="Empcode" 
@@ -156,26 +165,28 @@ const ChangePassword = (props) => {
                             disabled={false}
                         ></Input>
                         <Input
-                            ref={oldPasswordRef}
-                            id="oldPassword"
-                            type="password" 
-                            label="Old Password" 
-                            value={oldPasswordState.value} 
-                            isValid={oldPasswordState.isValid} 
-                            onChange={oldPasswordChangeHandler} 
-                            onBlur={validateOldPassword}
+                            ref={newPasswordRef}
+                            id="newPassword"
+                            type="password"
+                            label="New Password"
+                            value={newPasswordState.state}
+                            isValid={newPasswordState.isValid}
+                            onChange={newPasswordChangeHandler}
+                            onBlur={validateNewPassword}
                             disabled={false}
                         ></Input>
                         <Input
-                            ref={newPasswordRef}
-                            id="newPassword"
+                            ref={retypePasswordRef}
+                            id="retypePassword"
                             type="password" 
-                            label="New Password" 
-                            value={newPasswordState.state} 
-                            isValid={newPasswordState.isValid} 
-                            onChange={newPasswordChangeHandler} 
-                            onBlur={validateNewPassword}
+                            label="Retype Password" 
+                            value={retypePasswordState.value} 
+                            isValid={retypePasswordState.isValid} 
+                            onChange={retypePasswordChangeHandler} 
+                            onBlur={retypeOldPassword}
+                            disabled={false}
                         ></Input>
+                        
                         <div className={classes.actions}>
                             <Button type='submit' disabled={!formIsValid}>Change Password</Button>
                         </div>

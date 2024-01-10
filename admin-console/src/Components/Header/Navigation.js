@@ -12,11 +12,7 @@ const Navigation = () => {
   const navigation = useNavigate()
 
 
-  const logoutHandler = () => {
-    alert('You will be logged out of the application. Do you still want to continue?')
-    context.onLogOut()
-    navigation('/login')
-  }
+
 
   return (
     <nav className={classes.nav}>

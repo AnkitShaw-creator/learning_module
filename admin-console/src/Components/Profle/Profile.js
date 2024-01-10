@@ -25,12 +25,6 @@ const Profile = () => {
         setImageUploaded(true)
     }
 
-    // useEffect(() => {
-    //     if (imagefile) {
-    //         setImage(imagefile)
-    //     }
-    // },[imagefile])
-
     const uploadImageHandler = (event) => {
         event.preventDefault()
         if(!buttonClicked)
@@ -67,6 +61,7 @@ const Profile = () => {
 
     return (
         <Card className={classes.container}>
+            <div>Profile</div>
             <div className={classes.displayContent}>
                 <form className={classes.image_form} onSubmit={uploadImageHandler}>
                     <img width="150px" src={cookies.prf_img?`http://localhost:8000/static/images/${cookies.prf_img}`:placeholder} alt='' />

@@ -6,7 +6,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import classes from './Login.module.css'
 import AuthContext from '../../context/auth-context';
-
+import LinearProgress from '@mui/material/LinearProgress';
 
 const regex = /[a-zA-z]+/;  // regex to check if the empcode contains
 
@@ -35,7 +35,7 @@ const Login = (props) => {
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
     const [formIsValid, setFormIsValid] = useState(false)
-
+    const [showProgress, setShowProgress] = useState(false);
     const [empcodeState, dispatchEmpCode] = useReducer(empcodeReducer, { value: "", isValid: false });
     const [passwordState, dispatchPassword] = useReducer(passwordReducer, { value: "", isValid: false });
     const [error, setError] = useState('')
@@ -86,24 +86,25 @@ const Login = (props) => {
 
     const SubmitHandler = (event) => {   //sending the value to backend
         event.preventDefault()
-        if(formIsValid){
+        if (formIsValid) {
+            setShowProgress(true)
             const values = {
                 EmpCode: empcodeState.value, // update the variable everywhere to in the to username, as per suggestion
                 password: passwordState.value
             }
             axios.defaults.withCredentials = true;
-            console.log(`${process.env.REACT_APP_SERVER_URL}/login`);
+            
             axios.post('http://localhost:8000/login', values)
                     .then(res => {
                         if(res.status === 200){
-                                ctx.onLogIn()
-                                navigate('/dashboard', { state: { userdata: res['data']['userinfo'] } })
-                                console.log(res['data']['message']);
-                                console.log(res['data']['userinfo']);
-                            }
-                        else {
-                                console.error("Login failed");
-                                setError(res['data']['message']);
+                            //ctx.onLogIn(res['data']['userinfo'])
+                            navigate('/dashboard')
+                            //console.log(res['data']['message']);
+                            //console.log(res['data']['userinfo']);
+                        }
+                        else{
+                            console.error("Login failed");
+                            setError(res['data']['message']);
                         }
                     })
                     .catch((error) =>{
@@ -117,7 +118,6 @@ const Login = (props) => {
             empCodeRef.current.focus()
         else
             passwordRef.current.focus()
-
     }
 
     return (
@@ -149,15 +149,19 @@ const Login = (props) => {
                     <div className={classes.actions}>
                         <Button type="submit" disabled={!formIsValid}>Login</Button>
                     </div>
+
                     
                 </form>
                 {error && <p className={classes.error}>{error.toString()}</p>}
+                {showProgress && <LinearProgress color="inherit" />}
             </Card>
+            
             <Card className={classes.links}>
                 <Link to='/changepassword' className={classes.trigger}>Forgot Password?</Link>
             </Card>
         </div>
     );
 }
+
 
 export default Login;

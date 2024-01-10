@@ -8,8 +8,8 @@
 }
 
 .welcome_box {
-    padding: 2rem;
-    width: 80%;
+    padding: 1rem;
+    width: 85%;
     margin: 2rem auto;
     border-radius: 8px;
     color: #14213d;
@@ -18,9 +18,15 @@
     flex-flow: row;
     flex-wrap: wrap;
     align-content: center;
-    justify-content: center;
-    gap:2rem;
+    justify-content: space-between;
 
+}
+.user_box{
+    display: flex;
+    flex-flow: row;
+    gap: 2rem;
+    align-content: center;
+    margin: 2rem;
 }
 
 .initials{
@@ -39,6 +45,14 @@
     border-radius: 50%;
     height: 100%;
     width: 100%;
+}
+
+.syllabus{
+    position: relative;
+    justify-content: flex-end;
+    overflow-y: scroll;
+    height: 10rem;
+    width: 40rem;
 }
 
 .contents {
@@ -65,18 +79,38 @@
     justify-content: center;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 820px) {
     .module {
         width: 70rem;
     }
     .welcome_box{
         flex-direction: column;
         align-content: center;
+        justify-content: center;
+        width:100%;
+    }
+    .user_box{
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
     }
     .initials{
-        margin: 2rem;
+        align-content: center;
+        margin-left: 30%;
     }
     .initials_circle p{
         font-size: 32px;
+    }
+    .syllabus{
+        position: relative;
+        width: 40rem;
+        overflow-x: scroll;
+    }
+}
+
+@media (max-width: 600px){
+    .syllabus {
+        width: 20rem;
+        overflow-x: scroll;
     }
 }

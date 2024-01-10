@@ -10,17 +10,17 @@
 }
 
 .module_name {
+    top:0;
     color: #14213d;
     text-align: center;
     align-self: center;
-    top: 0.5rem;
     height: fit-content;
     position: absolute;
 }
 
 .banner_img {
-    width: 6.5rem;
-    height: 6.5rem;
+    width: 4rem;
+    height: 4rem;
     object-fit: contain;
     background-color: transparent;
     margin-left: 3rem;

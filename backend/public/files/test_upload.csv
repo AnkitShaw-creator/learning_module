@@ -1,0 +1,2 @@
+"id","EmpCode","FirstName","MIddleName","LastName","email","password","role","DOJ","Progress","Score","LastLogin","img","primaryDept","designation","last_passed_exam_date","course_slab","active"
+"15","222226","Ankit111",,"Shaw1111","ankit@1114sml.com","$2a$10$x0FVcyGb91fYMUJ9XiD5zOF.tnUnS2svzwKaUE2qCbcKItTvaOnG.","dev","2023-09-11","0","0","2023-11-04 09:57:01","image_profile_image_test_delete579887_1702530829994.jpg","IT","executive",NULL,"slab-1", 1

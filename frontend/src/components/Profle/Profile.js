@@ -21,17 +21,12 @@ const Profile = () => {
     const [imageUploaded, setImageUploaded] = useState(false)
     const [buttonClicked, setButtonClicked] = useState(false)
     const date = new Date(user.DOJ.substr(0,10)) // converting the user DOJ to a UTC format
-
+    console.log(user.DOJ);
+    console.log(date);
     const uploadImage = (e) => {
         setImage(e.target.files[0])
         setImageUploaded(true)
     }
-
-    // useEffect(() => {
-    //     if (imagefile) {
-    //         setImage(imagefile)
-    //     }
-    // },[imagefile])
 
     const uploadImageHandler = (event) => {
         event.preventDefault()
@@ -46,6 +41,7 @@ const Profile = () => {
                 setButtonClicked(false)
                 const formdata = new FormData()
                 formdata.append('image', image)
+                formdata.append('user', user.EmpCode)
                 axios.post('http://localhost:8000/editImg', formdata)
                     .then(res => { //change the logo to selected image
                         console.log(res.status);
@@ -66,7 +62,6 @@ const Profile = () => {
         
     }
 
-
     return (
         <Card className={classes.container}>
             <div className={classes.displayContent}>
@@ -74,7 +69,7 @@ const Profile = () => {
                     <Avatar sx={{ width: 156, height: 156, border: '2px solid orange' }} src={`http://localhost:8000/static/images/${cookies.prf_img}`} alt='' />
                     <div className={classes.details}>
                         <span>Email: {user.email}</span> 
-                        <span>Department: {departments.map(d=>{return d.department+", "})}</span>
+                        <span>Department: {user.primaryDept}</span>
                         {buttonClicked && <input type='file' onChange={uploadImage} accept='image/jpeg, image/png, image/jpg, image/webp'/>}
                         <div className={classes.img_upload_controls}>
                             <Button
@@ -122,8 +117,6 @@ const Profile = () => {
                     isValid={true}
                     disabled={true}
                 />
-                
-                
                 <Input
                     id="role"
                     type="text" 
@@ -136,7 +129,7 @@ const Profile = () => {
                     id="dateofjoining"
                     type="text" 
                     label="Date of Joining" 
-                    value={date.toUTCString().substring(0,16)} 
+                    value={`${date.getDate()+1} / ${date.getMonth()+1} / ${date.getFullYear()}`} // update the function
                     isValid={true}
                     disabled={true}
                 />

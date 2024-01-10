@@ -2,23 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import classes from "./NavList.module.css";
 import { FiChevronDown, FiChevronUp, FiInfo } from "react-icons/fi";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import Tooltip from '@mui/material/Tooltip';
 import { Button } from "@mui/material";
+
 function NavList(props) {
   const [list, setList] = useState();
   const [showLinks, setShowLinks] = useState(false);
   const data = props.topicData;
   const { courseCode, topicId, linkId } = useParams();
-  const navigate = useNavigate();
-  const [hover, setHover] = useState(false);
-  const onHover = () => {
-    setHover(true);
-  };
-
-  const onLeave = () => {
-    setHover(false);
-  };  
+  const navigate = useNavigate();  
 
   useEffect(() => {
     const values = {
@@ -27,15 +20,16 @@ function NavList(props) {
     };
 
     axios.post("http://localhost:8000/subtopics", values).then((res) => {
+      console.log(res.data);
       setList(res.data);
     });
     
   }, [props.course, props.subTopic, props.topic]);
 
-  const clickHandler = (name) => {
-    const linkid = parseInt(name.match(/(\d+)/));
-    // console.log(linkid, typeof(linkid));
-    navigate(`/course-content/${courseCode}/${topicId}/${linkid}`)
+  const clickHandler = (linkId) => {
+    //const linkid = parseInt(name.match(/(\d+)/)); //changed to make the linkid field more global
+    //console.log(row, typeof(row));
+    navigate(`/course-content/${courseCode}/${linkId}`)
   };
 
   const linkDisplayHandler = () => {
@@ -52,13 +46,7 @@ function NavList(props) {
           }
         </div>
         <p className={classes.header}>{data.topic}</p>
-        {data.mandatory === 1 &&
-          <Tooltip  disableFocusListener title={`Due by ${data.endDate}`} placement="right"> 
-            <Button sx={{
-              m: 1, position: 'static', marginRight: '5px'
-            }} ><FiInfo /></Button>
-          </Tooltip>
-        }
+        
       </div>
       <div className={classes.navlist}>
         {showLinks && (
@@ -69,10 +57,16 @@ function NavList(props) {
                   <div className={classes.link_row}>
                     <p
                       id={row.id}
-                      onClick={() => { clickHandler(row.link_name); } }>
+                      onClick={() => { clickHandler(row.id); } }>
                       {row.link_name}
                     </p>
-                      <input  type="checkbox"/>
+                    {data.mandatory === 1 &&
+                      <Tooltip  disableFocusListener title={`Due by ${data.endDate}`} placement="right"> 
+                        <Button sx={{
+                          m: 1, position: 'static', marginRight: '5px'
+                        }} ><FiInfo/></Button>
+                      </Tooltip>
+                    }
                   </ div>
                 );
               })}
